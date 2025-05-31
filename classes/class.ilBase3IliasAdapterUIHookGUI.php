@@ -30,7 +30,7 @@ class ilBase3IliasAdapterUIHookGUI extends ilUIHookPluginGUI {
 
     private function base3IliasBootstrap() {
 
-        if (!defined('DIR_ILIAS')) define('DIR_ILIAS', realpath(__DIR__ . '/..') . DIRECTORY_SEPARATOR);
+        if (!defined('DIR_ILIAS')) define('DIR_ILIAS', realpath(__DIR__ . '/../../../../../../../../..') . DIRECTORY_SEPARATOR);
         if (!defined('DIR_TMP')) define('DIR_TMP', '/srv/www/data/ilias10/base3/'); // TODO: in config auslagern
         if (!defined('DIR_SRC')) define('DIR_SRC', DIR_ILIAS . 'components/Base3/Base3Framework/src/');
         if (!defined('DIR_TEST')) define('DIR_TEST', DIR_ILIAS . 'components/Base3/Base3Framework/test/');
