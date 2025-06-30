@@ -30,12 +30,30 @@ class ilBase3IliasAdapterUIHookGUI extends ilUIHookPluginGUI {
 
     private function base3IliasBootstrap() {
 
+        // ILIAS base dir
         if (!defined('DIR_ILIAS')) define('DIR_ILIAS', realpath(__DIR__ . '/../../../../../../../../..') . DIRECTORY_SEPARATOR);
-        if (!defined('DIR_TMP')) define('DIR_TMP', '/srv/www/data/ilias10/base3/'); // TODO: in config auslagern
-        if (!defined('DIR_SRC')) define('DIR_SRC', DIR_ILIAS . 'components/Base3/Base3Framework/src/');
-        if (!defined('DIR_TEST')) define('DIR_TEST', DIR_ILIAS . 'components/Base3/Base3Framework/test/');
-        if (!defined('DIR_PLUGIN')) define('DIR_PLUGIN', DIR_ILIAS . 'components/Base3/');
-        if (!defined('DIR_LOCAL')) define('DIR_LOCAL', DIR_TMP);
+
+	// Generate data dir and tmp dir from ini (Remember to create DIR_TMP!)
+	$iliasConfig = parse_ini_file(DIR_ILIAS . 'ilias.ini.php', true);
+	$dataDir = $clientDir = $tmpDir = '';
+	if (isset($iliasConfig['clients']) && isset($iliasConfig['clients']['datadir']) && isset($iliasConfig['clients']['default'])) {
+	        $dataDir = $iliasConfig['clients']['datadir'] . '/';
+	        $clientDir = $dataDir . $iliasConfig['clients']['default'] . '/';
+	        $tmpDir = $clientDir . 'base3/';
+	}
+	if (!defined('DIR_DATA')) define('DIR_DATA', $dataDir);
+	if (!defined('DIR_CLIENT')) define('DIR_CLIENT', $clientDir);
+	if (!defined('DIR_TMP')) define('DIR_TMP', $tmpDir);
+
+	// installation dirs
+	if (!defined('DIR_COMPONENTS')) define('DIR_COMPONENTS', DIR_ILIAS . 'components/');
+	if (!defined('DIR_BASE3')) define('DIR_BASE3', DIR_COMPONENTS . 'Base3/');
+	if (!defined('DIR_FRAMEWORK')) define('DIR_FRAMEWORK', DIR_BASE3 . 'Base3Framework/');
+	if (!defined('DIR_SRC')) define('DIR_SRC', DIR_FRAMEWORK . 'src/');
+	if (!defined('DIR_TEST')) define('DIR_TEST', DIR_FRAMEWORK . 'test/');
+	if (!defined('DIR_PLUGIN')) define('DIR_PLUGIN', DIR_BASE3);
+	if (!defined('DIR_LOCAL')) define('DIR_LOCAL', DIR_TMP);
+
 
         // Debug mode - 0: aus, 1: an, ggfs noch höhere Stufen?
         putenv('DEBUG=1');
