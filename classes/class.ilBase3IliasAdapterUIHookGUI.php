@@ -4,7 +4,6 @@ use Base3\Api\IClassMap;
 use Base3\Api\IContainer;
 use Base3\Api\IPlugin;
 use Base3\Api\IRequest;
-use Base3\Core\PluginClassMap;
 use Base3\Core\Request;
 use Base3\Core\ServiceLocator;
 use Base3\Hook\HookManager;
@@ -12,6 +11,7 @@ use Base3\Hook\IHookListener;
 use Base3\Hook\IHookManager;
 use Base3\ServiceSelector\Api\IServiceSelector;
 use Base3\ServiceSelector\Standard\StandardServiceSelector;
+use Base3Ilias\Base3IliasClassMap;
 use Base3Ilias\Base3IliasServiceLocator;
 use Base3Ilias\IliasPsrContainer;
 use ILIAS\DI\Container;
@@ -70,7 +70,7 @@ class ilBase3IliasAdapterUIHookGUI extends ilUIHookPluginGUI {
             ->set(IRequest::class, Request::fromGlobals(), IContainer::SHARED)
             ->set(IContainer::class, 'servicelocator', IContainer::ALIAS)
             ->set(IHookManager::class, fn() => new HookManager, ServiceLocator::SHARED)
-            ->set('classmap', new PluginClassMap($servicelocator), IContainer::SHARED)
+            ->set('classmap', new Base3IliasClassMap($servicelocator), IContainer::SHARED)
             ->set(IClassMap::class, 'classmap', IContainer::ALIAS)
             ->set(IServiceSelector::class, fn() => new StandardServiceSelector($servicelocator), IContainer::SHARED);
 
