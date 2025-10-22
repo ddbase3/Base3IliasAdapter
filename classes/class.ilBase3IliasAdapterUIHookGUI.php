@@ -39,11 +39,9 @@ class ilBase3IliasAdapterUIHookGUI extends ilUIHookPluginGUI {
 	if (isset($iliasConfig['clients']) && isset($iliasConfig['clients']['datadir']) && isset($iliasConfig['clients']['default'])) {
 	        $dataDir = $iliasConfig['clients']['datadir'] . '/';
 	        $clientDir = $dataDir . $iliasConfig['clients']['default'] . '/';
-	        $tmpDir = $clientDir . 'base3/';
 	}
 	if (!defined('DIR_DATA')) define('DIR_DATA', $dataDir);
 	if (!defined('DIR_CLIENT')) define('DIR_CLIENT', $clientDir);
-	if (!defined('DIR_TMP')) define('DIR_TMP', $tmpDir);
 
 	// installation dirs
 	if (!defined('DIR_COMPONENTS')) define('DIR_COMPONENTS', DIR_ILIAS . 'components/');
@@ -52,6 +50,7 @@ class ilBase3IliasAdapterUIHookGUI extends ilUIHookPluginGUI {
 	if (!defined('DIR_SRC')) define('DIR_SRC', DIR_FRAMEWORK . 'src/');
 	if (!defined('DIR_TEST')) define('DIR_TEST', DIR_FRAMEWORK . 'test/');
 	if (!defined('DIR_PLUGIN')) define('DIR_PLUGIN', DIR_BASE3);
+	if (!defined('DIR_TMP')) define('DIR_TMP', DIR_BASE3 . 'temp/');
 	if (!defined('DIR_LOCAL')) define('DIR_LOCAL', DIR_TMP);
 
 
