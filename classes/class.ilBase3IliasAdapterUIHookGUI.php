@@ -11,9 +11,9 @@ use Base3\Hook\IHookListener;
 use Base3\Hook\IHookManager;
 use Base3\ServiceSelector\Api\IServiceSelector;
 use Base3\ServiceSelector\Standard\StandardServiceSelector;
-use Base3Ilias\Base3IliasClassMap;
-use Base3Ilias\Base3IliasServiceLocator;
-use Base3Ilias\IliasPsrContainer;
+use Base3Ilias\Base3\Base3IliasClassMap;
+use Base3Ilias\Base3\Base3IliasServiceLocator;
+use Base3Ilias\External\IliasPsrContainer;
 use ILIAS\DI\Container;
 
 class ilBase3IliasAdapterUIHookGUI extends ilUIHookPluginGUI {
@@ -50,7 +50,7 @@ class ilBase3IliasAdapterUIHookGUI extends ilUIHookPluginGUI {
 	if (!defined('DIR_SRC')) define('DIR_SRC', DIR_FRAMEWORK . 'src/');
 	if (!defined('DIR_TEST')) define('DIR_TEST', DIR_FRAMEWORK . 'test/');
 	if (!defined('DIR_PLUGIN')) define('DIR_PLUGIN', DIR_BASE3);
-	if (!defined('DIR_TMP')) define('DIR_TMP', DIR_BASE3 . 'temp/');
+	if (!defined('DIR_TMP')) define('DIR_TMP', DIR_BASE3 . 'tmp/');
 	if (!defined('DIR_LOCAL')) define('DIR_LOCAL', DIR_TMP);
 
 
