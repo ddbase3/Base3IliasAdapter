@@ -1,5 +1,8 @@
 tab_general#:#Allgemeines
 tab_configurationadmindisplay#:#Konfiguration
+tab_iliasembeddingqueueadmindisplay#:#Embedding
 tab_iliasvectorstoreadmindisplay#:#Vector Store
 tab_jobsadmindisplay#:#Jobs
+tab_logadmindisplay#:#Logs
 tab_servicesadmindisplay#:#Services
+
