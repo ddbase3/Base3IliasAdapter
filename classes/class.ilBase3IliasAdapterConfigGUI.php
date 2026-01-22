@@ -109,7 +109,7 @@ class ilBase3IliasAdapterConfigGUI extends AbstractPageComponentConfigGUI {
 	 * This intentionally contains no "real" configuration yet. It explains what Base3Ilias
 	 * (and this adapter) are supposed to do, so admins understand the moving parts.
 	 */
-	protected function renderGeneralTab(): void {
+	public function renderGeneralTab(): void {
 		$title = 'Base3Ilias Adapter';
 
 		$html = ''
@@ -118,7 +118,7 @@ class ilBase3IliasAdapterConfigGUI extends AbstractPageComponentConfigGUI {
 
 			. '<p class="lead">'
 			. 'Das Projekt <strong>Base3Ilias</strong> verbindet <strong>ILIAS</strong> mit dem <strong>BASE3 Framework</strong> '
-			. 'und erweitert ILIAS um moderne technische Bausteine, ohne dass dafür ein separates externes System betrieben werden muss.'
+			. 'und ergänzt ILIAS um zusätzliche technische Bausteine – modular, nachvollziehbar und ohne Core-Patches.'
 			. '</p>'
 
 			. '<div class="grid">'
@@ -127,29 +127,29 @@ class ilBase3IliasAdapterConfigGUI extends AbstractPageComponentConfigGUI {
 			. '    <ul>'
 			. '      <li><strong>Plugins laufen vollständig in ILIAS:</strong> Services, Routing und UI werden direkt im ILIAS-Kontext ausgeführt.</li>'
 			. '      <li><strong>Modular & erweiterbar:</strong> BASE3-Plugins ergänzen Funktionen sauber, ohne Core-Patches.</li>'
-			. '      <li><strong>Stabile Architektur:</strong> klare Interfaces, ClassMap-Discovery und nachvollziehbare Service-Strukturen.</li>'
+			. '      <li><strong>Lose gekoppelte Architektur:</strong> klare Interfaces, ClassMap-Discovery und stabile, austauschbare Komponenten.</li>'
 			. '    </ul>'
 			. '  </div>'
 
 			. '  <div class="card">'
-			. '    <h3>Technische Mittel, die ILIAS so nicht bietet</h3>'
+			. '    <h3>Technische Bausteine für strukturierte Erweiterungen</h3>'
 			. '    <ul>'
 			. '      <li><strong>Dependency Injection + Auto-Wiring:</strong> Services werden konsistent aufgelöst, getestet und wiederverwendet.</li>'
 			. '      <li><strong>Worker / Jobs:</strong> Hintergrundprozesse für Queue-Verarbeitung, Sync, Cleanup und periodische Aufgaben.</li>'
-			. '      <li><strong>Logging & Observability:</strong> strukturierte Scopes, Live-Tail und aussagekräftige Betriebsdaten.</li>'
-			. '      <li><strong>Microservice-Konnektoren:</strong> saubere Anbindung externer Systeme (optional) – ohne ILIAS zu verbiegen.</li>'
+			. '      <li><strong>Microservice-Konnektoren:</strong> saubere Anbindung externer Systeme (optional) – über klare Schnittstellen und ohne ILIAS zu verbiegen.</li>'
+			. '      <li><strong>Hohe Austauschbarkeit:</strong> Komponenten können je nach Bedarf ersetzt, erweitert oder ergänzt werden.</li>'
 			. '    </ul>'
 			. '  </div>'
 
 			. '  <div class="card">'
 			. '    <h3>KI-Komponenten & Wissensarbeit</h3>'
 			. '    <p>'
-			. '      BASE3 ergänzt ILIAS um eine robuste Grundlage für KI-Use-Cases – mit klaren Pipelines statt „Magie“.'
+			. '      BASE3 ergänzt ILIAS um eine robuste Grundlage für KI-Use-Cases – mit klaren Pipelines und gut wartbaren Bausteinen.'
 			. '    </p>'
 			. '    <ul>'
 			. '      <li><strong>Agent Flows:</strong> modulare Verarbeitungsschritte (Extractor → Parser → Chunker → Embedding → VectorStore).</li>'
 			. '      <li><strong>Chatbot / RAG:</strong> Retrieval über Vektor-Datenbank, Filter (z.B. Subtree/ACL) und nachvollziehbare Treffer.</li>'
-			. '      <li><strong>Transparenz statt Blackbox:</strong> Admin-Dashboards zeigen Fortschritt, Mengen, Fehler und letzte Aktionen.</li>'
+			. '      <li><strong>Admin-Dashboards:</strong> zeigen Fortschritt, Mengen, Fehler und letzte Aktionen.</li>'
 			. '    </ul>'
 			. '  </div>'
 

@@ -1,4 +1,5 @@
 tab_general#:#Allgemeines
+tab_agentflowadmindisplay#:#Agent Flows
 tab_configurationadmindisplay#:#Konfiguration
 tab_iliasembeddingqueueadmindisplay#:#Embedding
 tab_iliasvectorstoreadmindisplay#:#Vector Store
