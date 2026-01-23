@@ -2,6 +2,7 @@ tab_general#:#General
 tab_agentflowadmindisplay#:#Agent Flows
 tab_configurationadmindisplay#:#Configuration
 tab_iliasembeddingqueueadmindisplay#:#Embedding
+tab_iliasvectorpointsadmindisplay#:#Vector Points
 tab_iliasvectorstoreadmindisplay#:#Vector Store
 tab_jobsadmindisplay#:#Jobs
 tab_logadmindisplay#:#Logs
