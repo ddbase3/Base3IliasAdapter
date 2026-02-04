@@ -20,7 +20,7 @@ in this document are to be interpreted as described in
 
 ## Requirements
 
-*  [![Minimum ILIAS Version](https://img.shields.io/badge/Minimum_ILIAS-10.0-orange.svg)](https://ilias.de/) [![Maximum ILIAS Version](https://img.shields.io/badge/Maximum_ILIAS-10.999-orange.svg)](https://ilias.de/)
+*  [![Minimum ILIAS Version](https://img.shields.io/badge/Minimum_ILIAS-10.0-orange.svg)](https://ilias.de/) [![Maximum ILIAS Version](https://img.shields.io/badge/Maximum_ILIAS-11.999-orange.svg)](https://ilias.de/)
 *  ![Plugin Slot](https://img.shields.io/badge/Slot-UIHook-blue)
 *  ![Plugin Version](https://img.shields.io/badge/plugin_version-1.0.0-yellow)
 *  [![Minimum PHP Version](https://img.shields.io/badge/Minimum_PHP-8.1-blue.svg)](https://php.net/) [![Maximum PHP Version](https://img.shields.io/badge/Maximum_PHP-8.3-blue.svg)](https://php.net/)
