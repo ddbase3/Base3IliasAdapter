@@ -1,7 +1,9 @@
 tab_general#:#Allgemeines
 tab_agentflowadmindisplay#:#Agent Flows
 tab_configurationadmindisplay#:#Konfiguration
-tab_iliasembeddingqueueadmindisplay#:#Embedding
+tab_iliasembeddingprogressadmindisplay#:#Embedding Fortschritt
+tab_iliasembeddingqueueadmindisplay#:#Embedding Status
+tab_iliassourcekindenqueueadmindisplay#:#Embedding Typen
 tab_iliasvectorpointsadmindisplay#:#Vector Points
 tab_iliasvectorstoreadmindisplay#:#Vector Store
 tab_jobsadmindisplay#:#Jobs
