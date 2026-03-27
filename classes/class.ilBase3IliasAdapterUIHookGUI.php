@@ -5,15 +5,18 @@ use Base3\Api\IContainer;
 use Base3\Api\IPlugin;
 use Base3\Api\IRequest;
 use Base3\Api\ISystemService;
+use Base3\Configuration\Api\IConfiguration;
 use Base3\Core\Request;
 use Base3\Core\ServiceLocator;
 use Base3\Database\Api\IDatabase;
 use Base3\Hook\HookManager;
 use Base3\Hook\IHookListener;
 use Base3\Hook\IHookManager;
+use Base3\LinkTarget\Api\ILinkTargetService;
 use Base3\ServiceSelector\Api\IServiceSelector;
 use Base3\ServiceSelector\Standard\StandardServiceSelector;
 use Base3Ilias\Base3\Base3IliasClassMap;
+use Base3Ilias\Base3\Base3IliasLinkTargetService;
 use Base3Ilias\Base3\Base3IliasServiceLocator;
 use Base3Ilias\Base3\Base3IliasSystemService;
 use Base3Ilias\External\IliasPsrContainer;
@@ -73,7 +76,8 @@ class ilBase3IliasAdapterUIHookGUI extends ilUIHookPluginGUI {
 			->set(IHookManager::class, fn() => new HookManager, ServiceLocator::SHARED)
 			->set('classmap', new Base3IliasClassMap($servicelocator), IContainer::SHARED)
 			->set(IClassMap::class, 'classmap', IContainer::ALIAS)
-			->set(IServiceSelector::class, fn() => new StandardServiceSelector($servicelocator), IContainer::SHARED);
+			->set(IServiceSelector::class, fn() => new StandardServiceSelector($servicelocator), IContainer::SHARED)
+			->set(ILinkTargetService::class, fn($c) => new Base3IliasLinkTargetService($c->get(IConfiguration::class)), IContainer::SHARED);
 
 		// Fill container with ILIAS services
 		$servicelocator->setIliasContainer(new IliasPsrContainer($GLOBALS['DIC']));
