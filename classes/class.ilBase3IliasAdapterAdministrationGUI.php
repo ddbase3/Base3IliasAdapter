@@ -1,5 +1,8 @@
 <?php declare(strict_types=1);
 
+use Base3\Api\IClassMap;
+use Base3\Api\IDisplay;
+
 /**
  * Class ilBase3IliasAdapterAdministrationGUI
  * @author Daniel Dahme <dahme@qualitus.de>
@@ -7,6 +10,40 @@
  */
 class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	protected ilBase3IliasAdapterPlugin $plugin;
+
+	protected array $displayConfig = [
+		[
+			'name' => 'base3',
+			'label' => 'BASE3',
+			'displays' => [
+				[
+					'name' => 'logadmindisplay',
+					'label' => 'Log'
+				], [
+					'name' => 'servicesadmindisplay',
+					'label' => 'Services'
+				], [
+					'name' => 'configurationadmindisplay',
+					'label' => 'Configuration'
+				], [
+					'name' => 'jobsadmindisplay',
+					'label' => 'Jobs'
+				]
+			]
+		], [
+			'name' => 'providers',
+			'label' => 'Providers',
+			'displays' => [
+				[
+					'name' => 'aiprovideradmindisplay',
+					'label' => 'AI Providers'
+				], [
+					'name' => 'vectordbprovideradmindisplay',
+					'label' => 'Vector DB Providers'
+				]
+			]
+		],
+	];
 
 	public function __construct($a_data, int $a_id, bool $a_call_by_reference = true, bool $a_prepare_output = true) {
 		global $DIC;
@@ -22,20 +59,23 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	}
 
 	public function executeCommand(): void {
-		$cmd = $this->ctrl->getCmd('view');
+		$default_display = $this->getDefaultDisplayName();
+		$cmd = $this->ctrl->getCmd($default_display !== '' ? $default_display : 'view');
 
 		$this->prepareBase3Output();
 
-		switch ($cmd) {
-			case 'applications':
-				$this->applicationsObject();
-				break;
+		$resolved = $this->resolveDisplayConfig($cmd);
 
-			case 'view':
-			default:
-				$this->viewObject();
-				break;
+		if ($resolved == null) {
+			$this->tpl->setContent('');
+			return;
 		}
+
+		$this->setSubTabs($resolved['tab'], $resolved['display']['name']);
+
+		$display = $this->getDisplay($resolved['display']['name']);
+		$html = $display == null ? '' : $display->getOutput();
+		$this->tpl->setContent($html);
 	}
 
 	protected function prepareBase3Output(): void {
@@ -54,85 +94,73 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	}
 
 	protected function setTabs(): void {
-		$this->tabs_gui->addTab(
-			'view',
-			$this->txt('base3_admin_tab_tools', 'Tools'),
-			$this->ctrl->getLinkTarget($this, 'view')
-		);
+		foreach ($this->displayConfig as $tab) {
+			if (empty($tab['displays']) || empty($tab['displays'][0]['name'])) {
+				continue;
+			}
 
-		$this->tabs_gui->addTab(
-			'applications',
-			$this->txt('base3_admin_tab_applications', 'Applications'),
-			$this->ctrl->getLinkTarget($this, 'applications')
-		);
+			$this->tabs_gui->addTab(
+				$tab['name'],
+				$this->txt('base3_admin_tab_' . $tab['name'], $tab['label']),
+				$this->ctrl->getLinkTarget($this, $tab['displays'][0]['name'])
+			);
+		}
 	}
 
-	public function viewObject(): void {
-		$this->tabs_gui->activateTab('view');
-		$this->tpl->setContent($this->buildToolsHtml());
+	protected function setSubTabs(array $tab, string $active_subtab): void {
+		$this->tabs_gui->activateTab($tab['name']);
+
+		foreach ($tab['displays'] as $display) {
+			$this->tabs_gui->addSubTab(
+				$display['name'],
+				$this->txt('base3_admin_subtab_' . $display['name'], $display['label']),
+				$this->ctrl->getLinkTarget($this, $display['name'])
+			);
+		}
+
+		$this->tabs_gui->activateSubTab($active_subtab);
 	}
 
-	public function applicationsObject(): void {
-		$this->tabs_gui->activateTab('applications');
-		$this->tpl->setContent($this->buildApplicationsHtml());
+	protected function getDefaultDisplayName(): string {
+		$resolved = $this->getDefaultDisplayConfig();
+
+		if ($resolved == null) {
+			return '';
+		}
+
+		return $resolved['display']['name'];
 	}
 
-	protected function buildToolsHtml(): string {
-		$html = [];
-		$html[] = '<div class="container-fluid">';
-		$html[] = '<div class="row">';
-		$html[] = '<div class="col-xs-12">';
+	protected function getDefaultDisplayConfig(): ?array {
+		foreach ($this->displayConfig as $tab) {
+			if (empty($tab['displays']) || empty($tab['displays'][0])) {
+				continue;
+			}
 
-		$html[] = '<div class="panel panel-default">';
-		$html[] = '<div class="panel-heading">';
-		$html[] = '<h3 class="panel-title">' . $this->escape($this->txt('base3_admin_tools_title', 'BASE3 Tools')) . '</h3>';
-		$html[] = '</div>';
-		$html[] = '<div class="panel-body">';
-		$html[] = '<p>' . $this->escape($this->txt(
-			'base3_admin_tools_intro',
-			'Future BASE3-provided tools can be listed and configured here.'
-		)) . '</p>';
-		$html[] = '<ul class="list-group">';
-		$html[] = '<li class="list-group-item">' . $this->escape($this->txt('base3_admin_example_tools_item_1', 'Example Tool 1')) . '</li>';
-		$html[] = '<li class="list-group-item">' . $this->escape($this->txt('base3_admin_example_tools_item_2', 'Example Tool 2')) . '</li>';
-		$html[] = '</ul>';
-		$html[] = '</div>';
-		$html[] = '</div>';
+			return [
+				'tab' => $tab,
+				'display' => $tab['displays'][0]
+			];
+		}
 
-		$html[] = '</div>';
-		$html[] = '</div>';
-		$html[] = '</div>';
-
-		return implode('', $html);
+		return null;
 	}
 
-	protected function buildApplicationsHtml(): string {
-		$html = [];
-		$html[] = '<div class="container-fluid">';
-		$html[] = '<div class="row">';
-		$html[] = '<div class="col-xs-12">';
+	protected function resolveDisplayConfig(string $display_name): ?array {
+		foreach ($this->displayConfig as $tab) {
+			foreach ($tab['displays'] ?? [] as $display) {
+				if (($display['name'] ?? '') !== $display_name) {
+					continue;
+				}
 
-		$html[] = '<div class="panel panel-default">';
-		$html[] = '<div class="panel-heading">';
-		$html[] = '<h3 class="panel-title">' . $this->escape($this->txt('base3_admin_applications_title', 'BASE3 Applications')) . '</h3>';
-		$html[] = '</div>';
-		$html[] = '<div class="panel-body">';
-		$html[] = '<p>' . $this->escape($this->txt(
-			'base3_admin_applications_intro',
-			'Future BASE3-provided applications and extras can be listed and configured here.'
-		)) . '</p>';
-		$html[] = '<ul class="list-group">';
-		$html[] = '<li class="list-group-item">' . $this->escape($this->txt('base3_admin_example_applications_item_1', 'Example Application 1')) . '</li>';
-		$html[] = '<li class="list-group-item">' . $this->escape($this->txt('base3_admin_example_applications_item_2', 'Example Application 2')) . '</li>';
-		$html[] = '</ul>';
-		$html[] = '</div>';
-		$html[] = '</div>';
+				return [
+					'tab' => $tab,
+					'display' => $display
+				];
+			}
+		}
 
-		$html[] = '</div>';
-		$html[] = '</div>';
-		$html[] = '</div>';
-
-		return implode('', $html);
+		return $this->getDefaultDisplayConfig();
 	}
 
 	protected function txt(string $key, string $fallback): string {
@@ -145,7 +173,13 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 		return $txt;
 	}
 
-	protected function escape(string $value): string {
-		return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+	protected function getDisplay(string $name): ?IDisplay {
+		global $DIC;
+		$classmap = $DIC[IClassMap::class];
+		$instances = $classmap->getInstances([
+			'interface' => IDisplay::class,
+			'name' => $name
+		]);
+		return empty($instances) ? null : $instances[0];
 	}
 }

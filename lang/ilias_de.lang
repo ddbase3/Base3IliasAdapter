@@ -13,19 +13,14 @@ tab_servicesadmindisplay#:#Services
 
 base3_admin_menu_title#:#BASE3 Tools
 base3_admin_page_title#:#BASE3 Administration
-base3_admin_page_description#:#Zentrale Verwaltung fuer BASE3-Tools, Anwendungen und Extras.
+base3_admin_page_description#:#Zentrale Verwaltung für Subsystem-Tools, Anwendungen und Extras.
 base3_admin_no_access#:#Kein Zugriff auf die Administration.
-base3_admin_tab_tools#:#Tools
-base3_admin_tab_applications#:#Anwendungen
-base3_admin_tools_title#:#BASE3 Tools
-base3_admin_tools_intro#:#Hier koennen spaeter die vom BASE3 Framework gelieferten Tools angezeigt und konfiguriert werden.
-base3_admin_tools_empty#:#Aktuell sind noch keine BASE3-Tools registriert.
-base3_admin_applications_title#:#BASE3 Anwendungen
-base3_admin_applications_intro#:#Hier koennen spaeter die vom BASE3 Framework gelieferten Anwendungen und Extras angezeigt und konfiguriert werden.
-base3_admin_applications_empty#:#Aktuell sind noch keine BASE3-Anwendungen registriert.
-base3_admin_example_section_title#:#Beispielinhalt
-base3_admin_example_tools_item_1#:#Beispiel-Tool 1
-base3_admin_example_tools_item_2#:#Beispiel-Tool 2
-base3_admin_example_applications_item_1#:#Beispiel-Anwendung 1
-base3_admin_example_applications_item_2#:#Beispiel-Anwendung 2
+base3_admin_tab_base3#:#BASE3
+base3_admin_tab_providers#:#Provider
+base3_admin_subtab_logadmindisplay#:#Log
+base3_admin_subtab_servicesadmindisplay#:#Services
+base3_admin_subtab_configurationadmindisplay#:#Konfiguration
+base3_admin_subtab_jobsadmindisplay#:#Jobs
+base3_admin_subtab_aiprovideradmindisplay#:#KI Provider
+base3_admin_subtab_vectordbprovideradmindisplay#:#Vektor-DB Provider
 
