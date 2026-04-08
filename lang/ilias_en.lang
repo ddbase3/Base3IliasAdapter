@@ -1,5 +1,6 @@
 tab_general#:#General
 tab_agentflowadmindisplay#:#Agent Flows
+tab_aiprovideradmindisplay#:#AI Providers
 tab_configurationadmindisplay#:#Configuration
 tab_iliasembeddingprogressadmindisplay#:#Embedding Progress
 tab_iliasembeddingqueueadmindisplay#:#Embedding State
