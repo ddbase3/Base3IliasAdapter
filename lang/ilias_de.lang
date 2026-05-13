@@ -16,11 +16,21 @@ base3_admin_page_title#:#BASE3 Administration
 base3_admin_page_description#:#Zentrale Verwaltung für Subsystem-Tools, Anwendungen und Extras.
 base3_admin_no_access#:#Kein Zugriff auf die Administration.
 base3_admin_tab_base3#:#BASE3
-base3_admin_tab_providers#:#Provider
 base3_admin_subtab_logadmindisplay#:#Log
 base3_admin_subtab_servicesadmindisplay#:#Services
 base3_admin_subtab_configurationadmindisplay#:#Konfiguration
 base3_admin_subtab_jobsadmindisplay#:#Jobs
+base3_admin_tab_providers#:#Provider
 base3_admin_subtab_aiprovideradmindisplay#:#KI Provider
 base3_admin_subtab_vectordbprovideradmindisplay#:#Vektor-DB Provider
+base3_admin_tab_agenttools#:#Agenten-Tools
+base3_admin_subtab_agenttoollogadmindisplay#:#Tool-Log
+base3_admin_subtab_agenttooltestadmindisplay#:#Tool-Test
+base3_admin_tab_embedding#:#Embedding
+base3_admin_subtab_iliasembeddingprogressadmindisplay#:#Embedding Fortschritt
+base3_admin_subtab_iliasembeddingqueueadmindisplay#:#Embedding Warteliste
+base3_admin_subtab_iliassourcekindenqueueadmindisplay#:#Objekt-Typen
+base3_admin_subtab_iliasvectorpointsadmindisplay#:#Vektor-Points
+base3_admin_subtab_iliasvectorstoreadmindisplay#:#Vektor-Store
+base3_admin_tab_reporting#:#Berichtswesen
 

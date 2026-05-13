@@ -42,7 +42,50 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 					'label' => 'Vector DB Providers'
 				]
 			]
-		],
+		], [
+			'name' => 'agenttools',
+			'label' => 'Agent Tools',
+			'displays' => [
+				[
+					'name' => 'agenttoollogadmindisplay',
+					'label' => 'Tool Log'
+				], [
+					'name' => 'agenttooltestadmindisplay',
+					'label' => 'Tool Test'
+				]
+			]
+		], [
+			'name' => 'embedding',
+			'label' => 'Embedding',
+			'displays' => [
+				[
+					'name' => 'iliasembeddingprogressadmindisplay',
+					'label' => 'Embedding Progress'
+				], [
+					'name' => 'iliasembeddingqueueadmindisplay',
+					'label' => 'Embedding Queue'
+				], [
+					'name' => 'iliassourcekindenqueueadmindisplay',
+					'label' => 'Source Kinds'
+				], [
+					'name' => 'iliasvectorpointsadmindisplay',
+					'label' => 'Vector Points'
+				], [
+					'name' => 'iliasvectorstoreadmindisplay',
+					'label' => 'Vector Store'
+				]
+			]
+		], [
+			'name' => 'reporting',
+			'label' => 'Reporting',
+			'displays' => [
+				[
+					'name' => 'datahawkschemadisplay',
+					'label' => 'DB Schema',
+					'data' => ['domain' => 'ilias']
+				]
+			]
+		]
 	];
 
 	public function __construct($a_data, int $a_id, bool $a_call_by_reference = true, bool $a_prepare_output = true) {
@@ -59,6 +102,11 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	}
 
 	public function executeCommand(): void {
+
+		$this->tpl->addJavaScript('components/Base3/ClientStack/assetloader/assetloader.min.js');
+		$this->tpl->addJavaScript('components/Base3/ClientStack/jqueryui/jquery-ui.js');
+		$this->tpl->addCss('components/Base3/ClientStack/jqueryui/jquery-ui.css');
+
 		$default_display = $this->getDefaultDisplayName();
 		$cmd = $this->ctrl->getCmd($default_display !== '' ? $default_display : 'view');
 
@@ -73,7 +121,7 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 
 		$this->setSubTabs($resolved['tab'], $resolved['display']['name']);
 
-		$display = $this->getDisplay($resolved['display']['name']);
+		$display = $this->getDisplay($resolved['display']['name'], $resolved['display']['data'] ?? null);
 		$html = $display == null ? '' : $display->getOutput();
 		$this->tpl->setContent($html);
 	}
@@ -173,13 +221,16 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 		return $txt;
 	}
 
-	protected function getDisplay(string $name): ?IDisplay {
+	protected function getDisplay(string $name, mixed $data = null): ?IDisplay {
 		global $DIC;
 		$classmap = $DIC[IClassMap::class];
 		$instances = $classmap->getInstances([
 			'interface' => IDisplay::class,
 			'name' => $name
 		]);
-		return empty($instances) ? null : $instances[0];
+		if (empty($instances)) return null;
+		$instance = $instances[0];
+		$instance->setData($data);
+		return $instance;
 	}
 }
