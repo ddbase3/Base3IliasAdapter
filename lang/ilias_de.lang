@@ -11,11 +11,11 @@ tab_jobsadmindisplay#:#Jobs
 tab_logadmindisplay#:#Logs
 tab_servicesadmindisplay#:#Services
 
-base3_admin_menu_title#:#BASE3 Tools
-base3_admin_page_title#:#BASE3 Administration
-base3_admin_page_description#:#Zentrale Verwaltung für Subsystem-Tools, Anwendungen und Extras.
+base3_admin_menu_title#:#Werkzeuge
+base3_admin_page_title#:#Werkzeuge
+base3_admin_page_description#:#Zentrale Verwaltung für KI, Agenten, Reporting, CRM und weitere Werkzeuge.
 base3_admin_no_access#:#Kein Zugriff auf die Administration.
-base3_admin_tab_base3#:#BASE3
+base3_admin_tab_base3#:#System
 base3_admin_subtab_logadmindisplay#:#Log
 base3_admin_subtab_servicesadmindisplay#:#Services
 base3_admin_subtab_configurationadmindisplay#:#Konfiguration
