@@ -11,6 +11,10 @@ use Base3\Api\IDisplay;
 class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	protected ilBase3IliasAdapterPlugin $plugin;
 
+	protected ?array $availableDisplayConfig = null;
+
+	protected array $displayAvailability = [];
+
 	protected array $displayConfig = [
 		[
 			'name' => 'base3',
@@ -142,7 +146,7 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	}
 
 	protected function setTabs(): void {
-		foreach ($this->displayConfig as $tab) {
+		foreach ($this->getAvailableDisplayConfig() as $tab) {
 			if (empty($tab['displays']) || empty($tab['displays'][0]['name'])) {
 				continue;
 			}
@@ -180,7 +184,7 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	}
 
 	protected function getDefaultDisplayConfig(): ?array {
-		foreach ($this->displayConfig as $tab) {
+		foreach ($this->getAvailableDisplayConfig() as $tab) {
 			if (empty($tab['displays']) || empty($tab['displays'][0])) {
 				continue;
 			}
@@ -195,7 +199,7 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	}
 
 	protected function resolveDisplayConfig(string $display_name): ?array {
-		foreach ($this->displayConfig as $tab) {
+		foreach ($this->getAvailableDisplayConfig() as $tab) {
 			foreach ($tab['displays'] ?? [] as $display) {
 				if (($display['name'] ?? '') !== $display_name) {
 					continue;
@@ -211,6 +215,44 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 		return $this->getDefaultDisplayConfig();
 	}
 
+	protected function getAvailableDisplayConfig(): array {
+		if ($this->availableDisplayConfig !== null) {
+			return $this->availableDisplayConfig;
+		}
+
+		$this->availableDisplayConfig = [];
+
+		foreach ($this->displayConfig as $tab) {
+			$available_displays = [];
+
+			foreach ($tab['displays'] ?? [] as $display) {
+				if (empty($display['name']) || !$this->displayExists($display['name'])) {
+					continue;
+				}
+
+				$available_displays[] = $display;
+			}
+
+			if (empty($available_displays)) {
+				continue;
+			}
+
+			$tab['displays'] = $available_displays;
+			$this->availableDisplayConfig[] = $tab;
+		}
+
+		return $this->availableDisplayConfig;
+	}
+
+	protected function displayExists(string $name): bool {
+		if (array_key_exists($name, $this->displayAvailability)) {
+			return $this->displayAvailability[$name];
+		}
+
+		$this->displayAvailability[$name] = $this->getDisplayInstance($name) !== null;
+		return $this->displayAvailability[$name];
+	}
+
 	protected function txt(string $key, string $fallback): string {
 		$txt = $this->plugin->txt($key);
 
@@ -222,6 +264,17 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	}
 
 	protected function getDisplay(string $name, mixed $data = null): ?IDisplay {
+		$instance = $this->getDisplayInstance($name);
+
+		if ($instance == null) {
+			return null;
+		}
+
+		$instance->setData($data);
+		return $instance;
+	}
+
+	protected function getDisplayInstance(string $name): ?IDisplay {
 		global $DIC;
 		$classmap = $DIC[IClassMap::class];
 		$instances = $classmap->getInstances([
@@ -229,8 +282,6 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 			'name' => $name
 		]);
 		if (empty($instances)) return null;
-		$instance = $instances[0];
-		$instance->setData($data);
-		return $instance;
+		return $instances[0];
 	}
 }
