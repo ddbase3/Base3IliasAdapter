@@ -35,6 +35,22 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 				]
 			]
 		], [
+			'name' => 'chatbot',
+			'label' => 'Chatbot',
+			'displays' => [
+				[
+					'name' => 'chatbotconfigdisplay',
+					'label' => 'UI Hook',
+					'data' => [
+						'group' => 'uihk-chatbot',
+						'name' => 'default',
+						'title' => 'Chatbot UI Hook Configuration',
+						'description' => 'Global configuration for the chatbot that is injected into the ILIAS user interface by the UIHook plugin.',
+						'submit_label' => 'Save'
+					]
+				]
+			]
+		], [
 			'name' => 'providers',
 			'label' => 'Providers',
 			'displays' => [
@@ -56,6 +72,9 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 				], [
 					'name' => 'agenttooltestadmindisplay',
 					'label' => 'Tool Test'
+				], [
+					'name' => 'knowledgeagentmemoryadmindisplay',
+					'label' => 'Knowledge Tool'
 				]
 			]
 		], [
@@ -276,12 +295,17 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 
 	protected function getDisplayInstance(string $name): ?IDisplay {
 		global $DIC;
+
 		$classmap = $DIC[IClassMap::class];
 		$instances = $classmap->getInstances([
 			'interface' => IDisplay::class,
 			'name' => $name
 		]);
-		if (empty($instances)) return null;
+
+		if (empty($instances)) {
+			return null;
+		}
+
 		return $instances[0];
 	}
 }
