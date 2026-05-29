@@ -23,6 +23,7 @@ base3_admin_subtab_jobsadmindisplay#:#Jobs
 base3_admin_tab_chatbot#:#Chatbot
 base3_admin_tab_providers#:#Provider
 base3_admin_subtab_aiprovideradmindisplay#:#KI Provider
+base3_admin_subtab_chatllmadmindisplay#:#Chat Modelle
 base3_admin_subtab_vectordbprovideradmindisplay#:#Vektor-DB Provider
 base3_admin_tab_agenttools#:#Agenten-Tools
 base3_admin_subtab_agenttoollogadmindisplay#:#Tool-Log

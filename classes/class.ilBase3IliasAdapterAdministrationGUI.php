@@ -58,6 +58,9 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 					'name' => 'aiprovideradmindisplay',
 					'label' => 'AI Providers'
 				], [
+					'name' => 'chatllmadmindisplay',
+					'label' => 'Chat Models'
+				], [
 					'name' => 'vectordbprovideradmindisplay',
 					'label' => 'Vector DB Providers'
 				]
