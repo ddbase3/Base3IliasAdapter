@@ -1,39 +1,41 @@
-tab_general#:#General
-tab_agentflowadmindisplay#:#Agent Flows
-tab_aiprovideradmindisplay#:#AI Providers
-tab_configurationadmindisplay#:#Configuration
-tab_iliasembeddingprogressadmindisplay#:#Embedding Progress
-tab_iliasembeddingqueueadmindisplay#:#Embedding State
-tab_iliassourcekindenqueueadmindisplay#:#Embedding Types
-tab_iliasvectorpointsadmindisplay#:#Vector Points
-tab_iliasvectorstoreadmindisplay#:#Vector Store
-tab_jobsadmindisplay#:#Jobs
-tab_logadmindisplay#:#Logs
-tab_servicesadmindisplay#:#Services
-
 base3_admin_menu_title#:#Tools
 base3_admin_page_title#:#Tools
 base3_admin_page_description#:#Central administration for AI, agents, reporting, CRM and other tools.
 base3_admin_no_access#:#No administration access.
+
 base3_admin_tab_base3#:#System
-base3_admin_subtab_servicesadmindisplay#:#Services
 base3_admin_subtab_logadmindisplay#:#Log
+base3_admin_subtab_servicesadmindisplay#:#Services
 base3_admin_subtab_configurationadmindisplay#:#Configuration
 base3_admin_subtab_jobsadmindisplay#:#Jobs
+
 base3_admin_tab_chatbot#:#Chatbot
-base3_admin_tab_providers#:#Providers
-base3_admin_subtab_aiprovideradmindisplay#:#AI Providers
-base3_admin_subtab_chatllmadmindisplay#:#Chat Models
-base3_admin_subtab_vectordbprovideradmindisplay#:#Vector DB Providers
+base3_admin_subtab_chatbotconfigdisplay#:#Configuration
+
+base3_admin_tab_provider#:#Provider
+base3_admin_subtab_connectionconfigdisplay#:#Connections
+base3_admin_subtab_llmconfigdisplay#:#LLMs
+base3_admin_subtab_embeddingconfigdisplay#:#Embedding Models
+base3_admin_subtab_imageconfigdisplay#:#Image Generation
+base3_admin_subtab_searchconfigdisplay#:#Web Search
+base3_admin_subtab_parserserviceconfigdisplay#:#Parser Services
+base3_admin_subtab_vectorstoreconfigdisplay#:#Vector Stores
+base3_admin_subtab_vectorcollectionconfigdisplay#:#Vector Collections
+base3_admin_subtab_promptsetconfigdisplay#:#Prompt Sets
+base3_admin_subtab_agentflowconfigdisplay#:#Agent Flows
+base3_admin_subtab_chatbotinstanceconfigdisplay#:#Chatbot Instances
+
 base3_admin_tab_agenttools#:#Agent Tools
 base3_admin_subtab_agenttoollogadmindisplay#:#Tool Log
 base3_admin_subtab_agenttooltestadmindisplay#:#Tool Test
-base3_admin_subtab_knowledgeagentmemoryadmindisplay#:#Knowledge Tool
+base3_admin_subtab_knowledgeagentmemoryadmindisplay#:#Knowledge Store
+
 base3_admin_tab_embedding#:#Embedding
 base3_admin_subtab_iliasembeddingprogressadmindisplay#:#Embedding Progress
 base3_admin_subtab_iliasembeddingqueueadmindisplay#:#Embedding Queue
-base3_admin_subtab_iliassourcekindenqueueadmindisplay#:#Objekt Types
+base3_admin_subtab_iliassourcekindenqueueadmindisplay#:#Object Types
 base3_admin_subtab_iliasvectorpointsadmindisplay#:#Vector Points
 base3_admin_subtab_iliasvectorstoreadmindisplay#:#Vector Store
-base3_admin_tab_reporting#:#Reporting
 
+base3_admin_tab_reporting#:#Reporting
+base3_admin_subtab_datahawkschemadisplay#:#DB Schema

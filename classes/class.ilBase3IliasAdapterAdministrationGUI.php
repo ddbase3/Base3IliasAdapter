@@ -40,29 +40,53 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 			'displays' => [
 				[
 					'name' => 'chatbotconfigdisplay',
-					'label' => 'UI Hook',
+					'label' => 'Configuration',
 					'data' => [
 						'group' => 'uihk-chatbot',
 						'name' => 'default',
-						'title' => 'Chatbot UI Hook Configuration',
+						'title' => 'Chatbot Configuration',
 						'description' => 'Global configuration for the chatbot that is injected into the ILIAS user interface by the UIHook plugin.',
 						'submit_label' => 'Save'
 					]
 				]
 			]
 		], [
-			'name' => 'providers',
-			'label' => 'Providers',
+			'name' => 'provider',
+			'label' => 'Provider',
 			'displays' => [
 				[
-					'name' => 'aiprovideradmindisplay',
-					'label' => 'AI Providers'
+					'name' => 'connectionconfigdisplay',
+					'label' => 'Connections'
 				], [
-					'name' => 'chatllmadmindisplay',
-					'label' => 'Chat Models'
+					'name' => 'llmconfigdisplay',
+					'label' => 'LLMs'
 				], [
-					'name' => 'vectordbprovideradmindisplay',
-					'label' => 'Vector DB Providers'
+					'name' => 'embeddingconfigdisplay',
+					'label' => 'Embeddings'
+				], [
+					'name' => 'imageconfigdisplay',
+					'label' => 'Images'
+				], [
+					'name' => 'searchconfigdisplay',
+					'label' => 'Search'
+				], [
+					'name' => 'parserserviceconfigdisplay',
+					'label' => 'Parser Services'
+				], [
+					'name' => 'vectorstoreconfigdisplay',
+					'label' => 'Vector Stores'
+				], [
+					'name' => 'vectorcollectionconfigdisplay',
+					'label' => 'Vector Collections'
+				], [
+					'name' => 'promptsetconfigdisplay',
+					'label' => 'Prompt Sets'
+				], [
+					'name' => 'agentflowconfigdisplay',
+					'label' => 'Agent Flows'
+				], [
+					'name' => 'chatbotinstanceconfigdisplay',
+					'label' => 'Chatbot Instances'
 				]
 			]
 		], [
@@ -140,7 +164,7 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 
 		$resolved = $this->resolveDisplayConfig($cmd);
 
-		if ($resolved == null) {
+		if($resolved == null) {
 			$this->tpl->setContent('');
 			return;
 		}
@@ -168,8 +192,8 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	}
 
 	protected function setTabs(): void {
-		foreach ($this->getAvailableDisplayConfig() as $tab) {
-			if (empty($tab['displays']) || empty($tab['displays'][0]['name'])) {
+		foreach($this->getAvailableDisplayConfig() as $tab) {
+			if(empty($tab['displays']) || empty($tab['displays'][0]['name'])) {
 				continue;
 			}
 
@@ -184,7 +208,7 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	protected function setSubTabs(array $tab, string $active_subtab): void {
 		$this->tabs_gui->activateTab($tab['name']);
 
-		foreach ($tab['displays'] as $display) {
+		foreach($tab['displays'] as $display) {
 			$this->tabs_gui->addSubTab(
 				$display['name'],
 				$this->txt('base3_admin_subtab_' . $display['name'], $display['label']),
@@ -198,7 +222,7 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	protected function getDefaultDisplayName(): string {
 		$resolved = $this->getDefaultDisplayConfig();
 
-		if ($resolved == null) {
+		if($resolved == null) {
 			return '';
 		}
 
@@ -206,8 +230,8 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	}
 
 	protected function getDefaultDisplayConfig(): ?array {
-		foreach ($this->getAvailableDisplayConfig() as $tab) {
-			if (empty($tab['displays']) || empty($tab['displays'][0])) {
+		foreach($this->getAvailableDisplayConfig() as $tab) {
+			if(empty($tab['displays']) || empty($tab['displays'][0])) {
 				continue;
 			}
 
@@ -221,9 +245,9 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	}
 
 	protected function resolveDisplayConfig(string $display_name): ?array {
-		foreach ($this->getAvailableDisplayConfig() as $tab) {
-			foreach ($tab['displays'] ?? [] as $display) {
-				if (($display['name'] ?? '') !== $display_name) {
+		foreach($this->getAvailableDisplayConfig() as $tab) {
+			foreach($tab['displays'] ?? [] as $display) {
+				if(($display['name'] ?? '') !== $display_name) {
 					continue;
 				}
 
@@ -238,24 +262,24 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	}
 
 	protected function getAvailableDisplayConfig(): array {
-		if ($this->availableDisplayConfig !== null) {
+		if($this->availableDisplayConfig !== null) {
 			return $this->availableDisplayConfig;
 		}
 
 		$this->availableDisplayConfig = [];
 
-		foreach ($this->displayConfig as $tab) {
+		foreach($this->displayConfig as $tab) {
 			$available_displays = [];
 
-			foreach ($tab['displays'] ?? [] as $display) {
-				if (empty($display['name']) || !$this->displayExists($display['name'])) {
+			foreach($tab['displays'] ?? [] as $display) {
+				if(empty($display['name']) || !$this->displayExists($display['name'])) {
 					continue;
 				}
 
 				$available_displays[] = $display;
 			}
 
-			if (empty($available_displays)) {
+			if(empty($available_displays)) {
 				continue;
 			}
 
@@ -267,7 +291,7 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	}
 
 	protected function displayExists(string $name): bool {
-		if (array_key_exists($name, $this->displayAvailability)) {
+		if(array_key_exists($name, $this->displayAvailability)) {
 			return $this->displayAvailability[$name];
 		}
 
@@ -278,7 +302,7 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	protected function txt(string $key, string $fallback): string {
 		$txt = $this->plugin->txt($key);
 
-		if ($txt === $key || trim((string) $txt) === '') {
+		if($txt === $key || trim((string)$txt) === '') {
 			return $fallback;
 		}
 
@@ -288,7 +312,7 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	protected function getDisplay(string $name, mixed $data = null): ?IDisplay {
 		$instance = $this->getDisplayInstance($name);
 
-		if ($instance == null) {
+		if($instance == null) {
 			return null;
 		}
 
@@ -305,7 +329,7 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 			'name' => $name
 		]);
 
-		if (empty($instances)) {
+		if(empty($instances)) {
 			return null;
 		}
 
