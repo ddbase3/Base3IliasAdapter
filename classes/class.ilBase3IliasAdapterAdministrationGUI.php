@@ -2,6 +2,8 @@
 
 use Base3\Api\IClassMap;
 use Base3\Api\IDisplay;
+use Base3\Translation\Api\ITranslation;
+use Base3Ilias\Api\IBase3IliasSettings;
 
 /**
  * Class ilBase3IliasAdapterAdministrationGUI
@@ -9,134 +11,10 @@ use Base3\Api\IDisplay;
  * @ilCtrl_isCalledBy ilBase3IliasAdapterAdministrationGUI: ilAdministrationGUI
  */
 class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
-	protected ilBase3IliasAdapterPlugin $plugin;
 
 	protected ?array $availableDisplayConfig = null;
 
 	protected array $displayAvailability = [];
-
-	protected array $displayConfig = [
-		[
-			'name' => 'base3',
-			'label' => 'BASE3',
-			'displays' => [
-				[
-					'name' => 'logadmindisplay',
-					'label' => 'Log'
-				], [
-					'name' => 'servicesadmindisplay',
-					'label' => 'Services'
-				], [
-					'name' => 'configurationadmindisplay',
-					'label' => 'Configuration'
-				], [
-					'name' => 'jobsadmindisplay',
-					'label' => 'Jobs'
-				]
-			]
-		], [
-			'name' => 'chatbot',
-			'label' => 'Chatbot',
-			'displays' => [
-				[
-					'name' => 'chatbotconfigdisplay',
-					'label' => 'Configuration',
-					'data' => [
-						'group' => 'uihk-chatbot',
-						'name' => 'default',
-						'title' => 'Chatbot Configuration',
-						'description' => 'Global configuration for the chatbot that is injected into the ILIAS user interface by the UIHook plugin.',
-						'submit_label' => 'Save'
-					]
-				]
-			]
-		], [
-			'name' => 'provider',
-			'label' => 'Provider',
-			'displays' => [
-				[
-					'name' => 'connectionconfigdisplay',
-					'label' => 'Connections'
-				], [
-					'name' => 'llmconfigdisplay',
-					'label' => 'LLMs'
-				], [
-					'name' => 'embeddingconfigdisplay',
-					'label' => 'Embeddings'
-				], [
-					'name' => 'imageconfigdisplay',
-					'label' => 'Images'
-				], [
-					'name' => 'searchconfigdisplay',
-					'label' => 'Search'
-				], [
-					'name' => 'parserserviceconfigdisplay',
-					'label' => 'Parser Services'
-				], [
-					'name' => 'vectorstoreconfigdisplay',
-					'label' => 'Vector Stores'
-				], [
-					'name' => 'vectorcollectionconfigdisplay',
-					'label' => 'Vector Collections'
-				], [
-					'name' => 'promptsetconfigdisplay',
-					'label' => 'Prompt Sets'
-				], [
-					'name' => 'agentflowconfigdisplay',
-					'label' => 'Agent Flows'
-				], [
-					'name' => 'chatbotinstanceconfigdisplay',
-					'label' => 'Chatbot Instances'
-				]
-			]
-		], [
-			'name' => 'agenttools',
-			'label' => 'Agent Tools',
-			'displays' => [
-				[
-					'name' => 'agenttoollogadmindisplay',
-					'label' => 'Tool Log'
-				], [
-					'name' => 'agenttooltestadmindisplay',
-					'label' => 'Tool Test'
-				], [
-					'name' => 'knowledgeagentmemoryadmindisplay',
-					'label' => 'Knowledge Tool'
-				]
-			]
-		], [
-			'name' => 'embedding',
-			'label' => 'Embedding',
-			'displays' => [
-				[
-					'name' => 'iliasembeddingprogressadmindisplay',
-					'label' => 'Embedding Progress'
-				], [
-					'name' => 'iliasembeddingqueueadmindisplay',
-					'label' => 'Embedding Queue'
-				], [
-					'name' => 'iliassourcekindenqueueadmindisplay',
-					'label' => 'Source Kinds'
-				], [
-					'name' => 'iliasvectorpointsadmindisplay',
-					'label' => 'Vector Points'
-				], [
-					'name' => 'iliasvectorstoreadmindisplay',
-					'label' => 'Vector Store'
-				]
-			]
-		], [
-			'name' => 'reporting',
-			'label' => 'Reporting',
-			'displays' => [
-				[
-					'name' => 'datahawkschemadisplay',
-					'label' => 'DB Schema',
-					'data' => ['domain' => 'ilias']
-				]
-			]
-		]
-	];
 
 	public function __construct($a_data, int $a_id, bool $a_call_by_reference = true, bool $a_prepare_output = true) {
 		global $DIC;
@@ -145,7 +23,6 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 
 		parent::__construct($a_data, $a_id, $a_call_by_reference, $a_prepare_output);
 
-		$this->plugin = ilBase3IliasAdapterPlugin::getInstance();
 		$this->tpl = $DIC->ui()->mainTemplate();
 		$this->toolbar = $DIC->toolbar();
 		$this->lng->loadLanguageModule('administration');
@@ -268,7 +145,7 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 
 		$this->availableDisplayConfig = [];
 
-		foreach($this->displayConfig as $tab) {
+		foreach($this->getSettings()->getAdministrationConfig() as $tab) {
 			$available_displays = [];
 
 			foreach($tab['displays'] ?? [] as $display) {
@@ -300,13 +177,12 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	}
 
 	protected function txt(string $key, string $fallback): string {
-		$txt = $this->plugin->txt($key);
-
-		if($txt === $key || trim((string)$txt) === '') {
-			return $fallback;
-		}
-
-		return $txt;
+		return $this->getTranslation()->translate(
+			'Administration',
+			'administration',
+			$key,
+			$fallback
+		);
 	}
 
 	protected function getDisplay(string $name, mixed $data = null): ?IDisplay {
@@ -334,5 +210,17 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 		}
 
 		return $instances[0];
+	}
+
+	protected function getSettings(): IBase3IliasSettings {
+		global $DIC;
+
+		return $DIC[IBase3IliasSettings::class];
+	}
+
+	protected function getTranslation(): ITranslation {
+		global $DIC;
+
+		return $DIC[ITranslation::class];
 	}
 }
