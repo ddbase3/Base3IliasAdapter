@@ -12,10 +12,6 @@ use Base3Ilias\Api\IBase3IliasSettings;
  */
 class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 
-	protected ?array $availableDisplayConfig = null;
-
-	protected array $displayAvailability = [];
-
 	public function __construct($a_data, int $a_id, bool $a_call_by_reference = true, bool $a_prepare_output = true) {
 		global $DIC;
 
@@ -29,33 +25,25 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	}
 
 	public function executeCommand(): void {
-
 		$this->tpl->addJavaScript('components/Base3/ClientStack/assetloader/assetloader.min.js');
 		$this->tpl->addJavaScript('components/Base3/ClientStack/jqueryui/jquery-ui.js');
 		$this->tpl->addCss('components/Base3/ClientStack/jqueryui/jquery-ui.css');
 
-		$default_display = $this->getDefaultDisplayName();
-		$cmd = $this->ctrl->getCmd($default_display !== '' ? $default_display : 'view');
-
-		$this->prepareBase3Output();
-
-		$resolved = $this->resolveDisplayConfig($cmd);
-
-		if($resolved == null) {
-			$this->tpl->setContent('');
-			return;
-		}
-
-		$this->setSubTabs($resolved['tab'], $resolved['display']['name']);
-
-		$display = $this->getDisplay($resolved['display']['name'], $resolved['display']['data'] ?? null);
-		$html = $display == null ? '' : $display->getOutput();
-		$this->tpl->setContent($html);
-	}
-
-	protected function prepareBase3Output(): void {
 		$this->setTitleAndDescription();
-		$this->setTabs();
+
+		$display = $this->getDisplay(
+			'tabcontroldisplay',
+			[
+				'tabs' => $this->getAdministrationConfig(),
+				'active' => $this->ctrl->getCmd('view'),
+				'empty_message' => $this->txt(
+					'base3_admin_empty',
+					'No BASE3 administration displays are available.'
+				),
+			]
+		);
+
+		$this->tpl->setContent($display instanceof IDisplay ? $display->getOutput() : '');
 	}
 
 	protected function setTitleAndDescription(): void {
@@ -68,112 +56,56 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 		);
 	}
 
-	protected function setTabs(): void {
-		foreach($this->getAvailableDisplayConfig() as $tab) {
-			if(empty($tab['displays']) || empty($tab['displays'][0]['name'])) {
-				continue;
-			}
-
-			$this->tabs_gui->addTab(
-				$tab['name'],
-				$this->txt('base3_admin_tab_' . $tab['name'], $tab['label']),
-				$this->ctrl->getLinkTarget($this, $tab['displays'][0]['name'])
-			);
-		}
-	}
-
-	protected function setSubTabs(array $tab, string $active_subtab): void {
-		$this->tabs_gui->activateTab($tab['name']);
-
-		foreach($tab['displays'] as $display) {
-			$this->tabs_gui->addSubTab(
-				$display['name'],
-				$this->txt('base3_admin_subtab_' . $display['name'], $display['label']),
-				$this->ctrl->getLinkTarget($this, $display['name'])
-			);
-		}
-
-		$this->tabs_gui->activateSubTab($active_subtab);
-	}
-
-	protected function getDefaultDisplayName(): string {
-		$resolved = $this->getDefaultDisplayConfig();
-
-		if($resolved == null) {
-			return '';
-		}
-
-		return $resolved['display']['name'];
-	}
-
-	protected function getDefaultDisplayConfig(): ?array {
-		foreach($this->getAvailableDisplayConfig() as $tab) {
-			if(empty($tab['displays']) || empty($tab['displays'][0])) {
-				continue;
-			}
-
-			return [
-				'tab' => $tab,
-				'display' => $tab['displays'][0]
-			];
-		}
-
-		return null;
-	}
-
-	protected function resolveDisplayConfig(string $display_name): ?array {
-		foreach($this->getAvailableDisplayConfig() as $tab) {
-			foreach($tab['displays'] ?? [] as $display) {
-				if(($display['name'] ?? '') !== $display_name) {
-					continue;
-				}
-
-				return [
-					'tab' => $tab,
-					'display' => $display
-				];
-			}
-		}
-
-		return $this->getDefaultDisplayConfig();
-	}
-
-	protected function getAvailableDisplayConfig(): array {
-		if($this->availableDisplayConfig !== null) {
-			return $this->availableDisplayConfig;
-		}
-
-		$this->availableDisplayConfig = [];
+	protected function getAdministrationConfig(): array {
+		$config = [];
 
 		foreach($this->getSettings()->getAdministrationConfig() as $tab) {
-			$available_displays = [];
-
-			foreach($tab['displays'] ?? [] as $display) {
-				if(empty($display['name']) || !$this->displayExists($display['name'])) {
-					continue;
-				}
-
-				$available_displays[] = $display;
-			}
-
-			if(empty($available_displays)) {
+			if(!is_array($tab)) {
 				continue;
 			}
 
-			$tab['displays'] = $available_displays;
-			$this->availableDisplayConfig[] = $tab;
+			$tabName = isset($tab['name']) && is_scalar($tab['name'])
+				? trim((string) $tab['name'])
+				: '';
+
+			if($tabName === '') {
+				continue;
+			}
+
+			$tab['label'] = $this->txt(
+				'base3_admin_tab_' . $tabName,
+				isset($tab['label']) && is_scalar($tab['label']) ? (string) $tab['label'] : $tabName
+			);
+
+			$displays = [];
+			foreach($tab['displays'] ?? [] as $display) {
+				if(!is_array($display)) {
+					continue;
+				}
+
+				$displayName = isset($display['name']) && is_scalar($display['name'])
+					? trim((string) $display['name'])
+					: '';
+
+				if($displayName === '') {
+					continue;
+				}
+
+				$display['label'] = $this->txt(
+					'base3_admin_subtab_' . $displayName,
+					isset($display['label']) && is_scalar($display['label'])
+						? (string) $display['label']
+						: $displayName
+				);
+
+				$displays[] = $display;
+			}
+
+			$tab['displays'] = $displays;
+			$config[] = $tab;
 		}
 
-		return $this->availableDisplayConfig;
-	}
-
-	protected function displayExists(string $name): bool {
-		if(array_key_exists($name, $this->displayAvailability)) {
-			return $this->displayAvailability[$name];
-		}
-
-		$this->displayAvailability[$name] = $this->getDisplayInstance($name) !== null;
-		return $this->displayAvailability[$name];
+		return $config;
 	}
 
 	protected function txt(string $key, string $fallback): string {
@@ -188,7 +120,7 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	protected function getDisplay(string $name, mixed $data = null): ?IDisplay {
 		$instance = $this->getDisplayInstance($name);
 
-		if($instance == null) {
+		if(!$instance instanceof IDisplay) {
 			return null;
 		}
 
@@ -200,16 +132,9 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 		global $DIC;
 
 		$classmap = $DIC[IClassMap::class];
-		$instances = $classmap->getInstances([
-			'interface' => IDisplay::class,
-			'name' => $name
-		]);
+		$instance = $classmap->getInstanceByInterfaceName(IDisplay::class, $name);
 
-		if(empty($instances)) {
-			return null;
-		}
-
-		return $instances[0];
+		return $instance instanceof IDisplay ? $instance : null;
 	}
 
 	protected function getSettings(): IBase3IliasSettings {
