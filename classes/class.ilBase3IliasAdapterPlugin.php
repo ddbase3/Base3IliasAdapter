@@ -65,6 +65,11 @@ class ilBase3IliasAdapterPlugin extends ilUserInterfaceHookPlugin
 			$this->provider_collection->setMainBarProvider(
 				new ilBase3IliasAdapterMainBarProvider($DIC, $this)
 			);
+
+			require_once(__DIR__ . '/class.ilBase3IliasAdapterMetaBarProvider.php');
+			$this->provider_collection->setMetaBarProvider(
+				new ilBase3IliasAdapterMetaBarProvider($DIC, $this)
+			);
 		}
 	}
 
