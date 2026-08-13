@@ -1,7 +1,7 @@
 <?php
 
 $id = 'base3iliasadapter';
-$version = '4.6.0';
+$version = '4.7.0';
 $ilias_min_version = '10.0';
 $ilias_max_version = '12.999';
 $responsible = 'Daniel Dahme';
