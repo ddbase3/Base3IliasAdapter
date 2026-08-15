@@ -36,6 +36,9 @@ class ilBase3IliasAdapterAjaxGUI {
 
 	protected function dispatch(): void {
 		$request = Base3IliasRuntime::getServiceLocator()->get(IRequest::class);
+		$out = trim((string) $request->request('out', 'html'));
+		$this->setResponseContentType($out);
+
 		$encodedData = $request->request(self::DISPLAY_DATA_PARAMETER, null);
 
 		if(!is_string($encodedData) || trim($encodedData) === '') {
@@ -49,7 +52,6 @@ class ilBase3IliasAdapterAjaxGUI {
 		}
 
 		$name = trim((string) $request->request('name', ''));
-		$out = trim((string) $request->request('out', 'html'));
 
 		$classmap = Base3IliasRuntime::getServiceLocator()->get(IClassMap::class);
 		$display = $classmap->getInstanceByInterfaceName(IDisplay::class, $name);
@@ -101,6 +103,23 @@ class ilBase3IliasAdapterAjaxGUI {
 			'valid' => true,
 			'value' => $value,
 		];
+	}
+
+	private function setResponseContentType(string $out): void {
+		if(headers_sent()) {
+			return;
+		}
+
+		$contentType = match(strtolower(trim($out))) {
+			'json' => 'application/json; charset=utf-8',
+			'xml' => 'application/xml; charset=utf-8',
+			'php', 'text', 'txt' => 'text/plain; charset=utf-8',
+			default => ''
+		};
+
+		if($contentType !== '') {
+			header('Content-Type: ' . $contentType);
+		}
 	}
 
 	private function sendError(int $statusCode, string $message): never {
