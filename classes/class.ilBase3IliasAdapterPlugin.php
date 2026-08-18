@@ -96,7 +96,7 @@ class ilBase3IliasAdapterPlugin extends ilUserInterfaceHookPlugin
 
 		if (!isset($DIC['de.qualitus.plugin.' . $dep_name])) {
 			if ($redirect) {
-				ilUtil::sendFailure('Abort because of missing dependency: ' . $dep_name, true);
+				ilUtil::sendFailure(sprintf($this->txt('missing_dependency_abort'), $dep_name), true);
 				$DIC->ctrl()->redirectToURL(
 					$DIC->ctrl()->getLinkTargetByClass(
 						'ilObjComponentSettingsGUI',
@@ -107,7 +107,7 @@ class ilBase3IliasAdapterPlugin extends ilUserInterfaceHookPlugin
 					)
 				);
 			} else {
-				ilUtil::sendInfo('Missing dependency: ' . $dep_name, true);
+				ilUtil::sendInfo(sprintf($this->txt('missing_dependency_info'), $dep_name), true);
 			}
 
 			return false;
@@ -126,7 +126,7 @@ class ilBase3IliasAdapterPlugin extends ilUserInterfaceHookPlugin
 
 		if (!file_exists($dependency_file)) {
 			$DIC->logger()->root()->warning('File missing: dependencies.php');
-			ilUtil::sendFailure('File missing: dependencies.php', true);
+			ilUtil::sendFailure(self::getInstance()->txt('dependencies_file_missing'), true);
 			return;
 		}
 

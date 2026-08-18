@@ -1,0 +1,48 @@
+base3_admin_menu_title#:#الأدوات
+base3_admin_no_access#:#لا يوجد وصول إلى الإدارة.
+base3_admin_empty#:#لا توجد شاشات إدارة BASE3 متاحة.
+base3_admin_page_title#:#إدارة BASE3
+base3_admin_page_description#:#صفحة إدارة مركزية لأدوات وتطبيقات وإضافات BASE3.
+tab_general#:#عام
+error_tab_not_found_title#:#علامة التبويب غير موجودة
+error_tab_not_found_message#:#علامة تبويب الإدارة المطلوبة غير متاحة.
+general_title#:#محوّل Base3Ilias
+general_lead#:#يربط Base3Ilias نظام ILIAS بإطار BASE3 ويضيف مكوّنات تقنية معيارية وقابلة للتتبع دون تعديل النواة.
+general_ecosystem_title#:#منظومة BASE3 داخل ILIAS
+general_ecosystem_plugins_label#:#تعمل الإضافات بالكامل داخل ILIAS
+general_ecosystem_plugins_text#:#تُنفَّذ الخدمات والتوجيه وواجهة المستخدم مباشرة في سياق ILIAS.
+general_ecosystem_modular_label#:#معياري وقابل للتوسعة
+general_ecosystem_modular_text#:#تضيف إضافات BASE3 الوظائف بشكل منظم دون تعديلات على النواة.
+general_ecosystem_architecture_label#:#بنية منخفضة الترابط
+general_ecosystem_architecture_text#:#واجهات واضحة واكتشاف ClassMap ومكوّنات مستقرة قابلة للاستبدال.
+general_technical_title#:#مكوّنات تقنية لامتدادات منظمة
+general_technical_di_label#:#حقن الاعتماد وAuto-Wiring
+general_technical_di_text#:#تُحل الخدمات بصورة متسقة ويمكن اختبارها وإعادة استخدامها.
+general_technical_workers_label#:#Workers وJobs
+general_technical_workers_text#:#معالجة خلفية للطوابير والمزامنة والتنظيف والمهام الدورية.
+general_technical_microservices_label#:#موصلات الخدمات المصغرة
+general_technical_microservices_text#:#تُربط الأنظمة الخارجية الاختيارية عبر واجهات واضحة دون تشويه ILIAS.
+general_technical_replaceable_label#:#قابلية استبدال عالية
+general_technical_replaceable_text#:#يمكن استبدال المكوّنات أو توسيعها أو استكمالها حسب الحاجة.
+general_ai_title#:#مكوّنات الذكاء الاصطناعي والعمل المعرفي
+general_ai_intro#:#يضيف BASE3 إلى ILIAS أساساً قوياً لاستخدامات الذكاء الاصطناعي مع مسارات واضحة ومكوّنات سهلة الصيانة.
+general_ai_flows_label#:#Agent Flows
+general_ai_flows_text#:#خطوات معالجة معيارية مثل extractor وparser وchunker وembedding وvector store.
+general_ai_chatbot_label#:#Chatbot وRAG
+general_ai_chatbot_text#:#استرجاع عبر قواعد بيانات متجهية مع مرشحات مثل subtree أو ACL ونتائج قابلة للتتبع.
+general_ai_dashboards_label#:#لوحات الإدارة
+general_ai_dashboards_text#:#تعرض التقدم والكميات والأخطاء والإجراءات الأخيرة.
+general_reporting_title#:#التقارير وأدوات البيانات
+general_reporting_displays_label#:#شاشات التقارير
+general_reporting_displays_text#:#جداول وعروض قابلة للتهيئة مع مصدر بيانات موحد.
+general_reporting_queries_label#:#طبقات استعلام منظمة
+general_reporting_queries_text#:#استعلامات بيانات متسقة، بما في ذلك حل عمليات join، لتقارير قابلة لإعادة الاستخدام.
+general_reporting_assets_label#:#موارد الواجهة الأمامية
+general_reporting_assets_text#:#يجمع ClientStack ملفات JavaScript وCSS بطريقة منظمة وسهلة الصيانة.
+general_credentials_label#:#بيانات الاعتماد
+general_credentials_text#:#هذا المشروع جزء من BASE3 EcoSystem (GPL v3.0)، طوّره ويصونه Daniel Dahme.
+missing_dependency_abort#:#إيقاف بسبب اعتماد مفقود: %s
+missing_dependency_info#:#اعتماد مفقود: %s
+dependencies_file_missing#:#الملف مفقود: dependencies.php
+ajax_invalid_display_data#:#بيانات العرض غير صالحة.
+ajax_display_not_found#:#العرض غير موجود.

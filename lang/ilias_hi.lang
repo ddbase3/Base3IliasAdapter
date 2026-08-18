@@ -1,0 +1,48 @@
+base3_admin_menu_title#:#उपकरण
+base3_admin_no_access#:#प्रशासन तक पहुँच नहीं है।
+base3_admin_empty#:#कोई BASE3 प्रशासन दृश्य उपलब्ध नहीं है।
+base3_admin_page_title#:#BASE3 प्रशासन
+base3_admin_page_description#:#BASE3 उपकरणों, अनुप्रयोगों और विस्तारों के लिए केंद्रीय प्रशासन पृष्ठ।
+tab_general#:#सामान्य
+error_tab_not_found_title#:#टैब नहीं मिला
+error_tab_not_found_message#:#अनुरोधित प्रशासन टैब उपलब्ध नहीं है।
+general_title#:#Base3Ilias Adapter
+general_lead#:#Base3Ilias ILIAS को BASE3 Framework से जोड़ता है और कोर पैच के बिना मॉड्यूलर व ट्रेस करने योग्य तकनीकी घटक जोड़ता है।
+general_ecosystem_title#:#ILIAS में BASE3 EcoSystem
+general_ecosystem_plugins_label#:#प्लगइन पूरी तरह ILIAS में चलते हैं
+general_ecosystem_plugins_text#:#सेवाएँ, रूटिंग और UI सीधे ILIAS संदर्भ में चलती हैं।
+general_ecosystem_modular_label#:#मॉड्यूलर और विस्तार योग्य
+general_ecosystem_modular_text#:#BASE3 प्लगइन कोर पैच के बिना साफ़ तरीके से कार्यक्षमता जोड़ते हैं।
+general_ecosystem_architecture_label#:#कम जुड़ी हुई आर्किटेक्चर
+general_ecosystem_architecture_text#:#स्पष्ट इंटरफेस, ClassMap discovery और स्थिर, बदलने योग्य घटक।
+general_technical_title#:#संरचित विस्तारों के लिए तकनीकी घटक
+general_technical_di_label#:#Dependency Injection और Auto-Wiring
+general_technical_di_text#:#सेवाएँ एक समान ढंग से resolve होती हैं और उनका परीक्षण व पुनः उपयोग किया जा सकता है।
+general_technical_workers_label#:#Workers और Jobs
+general_technical_workers_text#:#क्यू, सिंक्रोनाइज़ेशन, क्लीनअप और आवर्ती कार्यों के लिए पृष्ठभूमि प्रसंस्करण।
+general_technical_microservices_label#:#Microservice connectors
+general_technical_microservices_text#:#वैकल्पिक बाहरी सिस्टम स्पष्ट इंटरफेस के माध्यम से जोड़े जाते हैं, बिना ILIAS को विकृत किए।
+general_technical_replaceable_label#:#उच्च बदलने योग्यता
+general_technical_replaceable_text#:#आवश्यकतानुसार घटकों को बदला, बढ़ाया या पूरक किया जा सकता है।
+general_ai_title#:#AI घटक और ज्ञान कार्य
+general_ai_intro#:#BASE3 स्पष्ट pipelines और रखरखाव योग्य घटकों के साथ ILIAS में AI उपयोगों के लिए मजबूत आधार जोड़ता है।
+general_ai_flows_label#:#Agent Flows
+general_ai_flows_text#:#extractor, parser, chunker, embedding और vector store जैसे मॉड्यूलर प्रसंस्करण चरण।
+general_ai_chatbot_label#:#Chatbot और RAG
+general_ai_chatbot_text#:#subtree या ACL जैसे फ़िल्टरों और ट्रेस करने योग्य परिणामों के साथ vector databases से retrieval।
+general_ai_dashboards_label#:#Admin dashboards
+general_ai_dashboards_text#:#प्रगति, मात्राएँ, त्रुटियाँ और हाल की कार्रवाइयाँ दिखाते हैं।
+general_reporting_title#:#रिपोर्टिंग और डेटा उपकरण
+general_reporting_displays_label#:#रिपोर्टिंग दृश्य
+general_reporting_displays_text#:#एकसमान डेटा स्रोत के साथ विन्यास योग्य तालिकाएँ और दृश्य।
+general_reporting_queries_label#:#संरचित query layers
+general_reporting_queries_text#:#पुनः उपयोग योग्य रिपोर्टों के लिए join resolution सहित एकसमान डेटा queries।
+general_reporting_assets_label#:#Frontend assets
+general_reporting_assets_text#:#ClientStack JavaScript और CSS को नियंत्रित व रखरखाव योग्य रूप में एकत्र करता है।
+general_credentials_label#:#श्रेय
+general_credentials_text#:#यह परियोजना BASE3 EcoSystem (GPL v3.0) का हिस्सा है, जिसे Daniel Dahme ने विकसित किया और बनाए रखा है।
+missing_dependency_abort#:#अनुपलब्ध dependency के कारण रोकना पड़ा: %s
+missing_dependency_info#:#अनुपलब्ध dependency: %s
+dependencies_file_missing#:#फ़ाइल अनुपलब्ध है: dependencies.php
+ajax_invalid_display_data#:#अमान्य display डेटा।
+ajax_display_not_found#:#Display नहीं मिला।

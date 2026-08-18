@@ -1,0 +1,48 @@
+base3_admin_menu_title#:#工具
+base3_admin_no_access#:#无管理权限。
+base3_admin_empty#:#没有可用的 BASE3 管理视图。
+base3_admin_page_title#:#BASE3 管理
+base3_admin_page_description#:#BASE3 工具、应用和扩展的集中管理页面。
+tab_general#:#常规
+error_tab_not_found_title#:#未找到标签页
+error_tab_not_found_message#:#请求的管理标签页不可用。
+general_title#:#Base3Ilias 适配器
+general_lead#:#Base3Ilias 将 ILIAS 与 BASE3 Framework 连接，并在不修改核心的情况下提供模块化、可追踪的技术组件。
+general_ecosystem_title#:#ILIAS 中的 BASE3 EcoSystem
+general_ecosystem_plugins_label#:#插件完全运行在 ILIAS 中
+general_ecosystem_plugins_text#:#服务、路由和界面直接在 ILIAS 上下文中执行。
+general_ecosystem_modular_label#:#模块化且可扩展
+general_ecosystem_modular_text#:#BASE3 插件无需修改核心即可清晰地添加功能。
+general_ecosystem_architecture_label#:#低耦合架构
+general_ecosystem_architecture_text#:#清晰的接口、ClassMap 发现机制以及稳定且可替换的组件。
+general_technical_title#:#用于结构化扩展的技术组件
+general_technical_di_label#:#依赖注入和 Auto-Wiring
+general_technical_di_text#:#服务以一致方式解析，并可进行测试和复用。
+general_technical_workers_label#:#Workers 和 Jobs
+general_technical_workers_text#:#用于队列、同步、清理和周期任务的后台处理。
+general_technical_microservices_label#:#微服务连接器
+general_technical_microservices_text#:#可选外部系统通过清晰接口接入，而无需扭曲 ILIAS。
+general_technical_replaceable_label#:#高度可替换
+general_technical_replaceable_text#:#组件可按需替换、扩展或补充。
+general_ai_title#:#AI 组件与知识工作
+general_ai_intro#:#BASE3 为 ILIAS 中的 AI 应用提供稳健基础，包括清晰的处理流程和易维护组件。
+general_ai_flows_label#:#Agent Flows
+general_ai_flows_text#:#模块化处理步骤，例如 extractor、parser、chunker、embedding 和 vector store。
+general_ai_chatbot_label#:#Chatbot 和 RAG
+general_ai_chatbot_text#:#通过向量数据库检索，并支持 subtree、ACL 等过滤条件和可追踪结果。
+general_ai_dashboards_label#:#管理仪表板
+general_ai_dashboards_text#:#显示进度、数量、错误和最近操作。
+general_reporting_title#:#报表与数据工具
+general_reporting_displays_label#:#报表视图
+general_reporting_displays_text#:#使用统一数据源的可配置表格和视图。
+general_reporting_queries_label#:#结构化查询层
+general_reporting_queries_text#:#包含 join 解析的一致数据查询，可用于复用报表。
+general_reporting_assets_label#:#前端资源
+general_reporting_assets_text#:#ClientStack 以可控且易维护的方式组织 JavaScript 和 CSS。
+general_credentials_label#:#署名
+general_credentials_text#:#本项目属于 BASE3 EcoSystem（GPL v3.0），由 Daniel Dahme 开发并维护。
+missing_dependency_abort#:#因缺少依赖而中止：%s
+missing_dependency_info#:#缺少依赖：%s
+dependencies_file_missing#:#缺少文件：dependencies.php
+ajax_invalid_display_data#:#显示数据无效。
+ajax_display_not_found#:#未找到显示组件。

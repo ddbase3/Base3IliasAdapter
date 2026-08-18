@@ -44,7 +44,10 @@ class ilBase3IliasAdapterConfigGUI extends AbstractPageComponentConfigGUI {
 
 		$display = $displays[$cmd] ?? null;
 		if (!$display instanceof IAdminDisplay) {
-			$this->tpl->setContent($this->renderErrorBox('Tab not found', 'The requested admin display tab is not available.'));
+			$this->tpl->setContent($this->renderErrorBox(
+				$this->txt('error_tab_not_found_title'),
+				$this->txt('error_tab_not_found_message')
+			));
 			return;
 		}
 
@@ -110,55 +113,50 @@ class ilBase3IliasAdapterConfigGUI extends AbstractPageComponentConfigGUI {
 	 * (and this adapter) are supposed to do, so admins understand the moving parts.
 	 */
 	public function renderGeneralTab(): void {
-		$title = 'Base3Ilias Adapter';
-
 		$html = ''
 			. '<div class="base3ilias-general">'
-			. '<h2>' . $this->escape($title) . '</h2>'
+			. '<h2>' . $this->escape($this->txt('general_title')) . '</h2>'
 
 			. '<p class="lead">'
-			. 'Das Projekt <strong>Base3Ilias</strong> verbindet <strong>ILIAS</strong> mit dem <strong>BASE3 Framework</strong> '
-			. 'und ergänzt ILIAS um zusätzliche technische Bausteine – modular, nachvollziehbar und ohne Core-Patches.'
+			. $this->escape($this->txt('general_lead'))
 			. '</p>'
 
 			. '<div class="grid">'
 			. '  <div class="card">'
-			. '    <h3>BASE3 EcoSystem in ILIAS</h3>'
+			. '    <h3>' . $this->escape($this->txt('general_ecosystem_title')) . '</h3>'
 			. '    <ul>'
-			. '      <li><strong>Plugins laufen vollständig in ILIAS:</strong> Services, Routing und UI werden direkt im ILIAS-Kontext ausgeführt.</li>'
-			. '      <li><strong>Modular & erweiterbar:</strong> BASE3-Plugins ergänzen Funktionen sauber, ohne Core-Patches.</li>'
-			. '      <li><strong>Lose gekoppelte Architektur:</strong> klare Interfaces, ClassMap-Discovery und stabile, austauschbare Komponenten.</li>'
+			. $this->renderListItem('general_ecosystem_plugins_label', 'general_ecosystem_plugins_text')
+			. $this->renderListItem('general_ecosystem_modular_label', 'general_ecosystem_modular_text')
+			. $this->renderListItem('general_ecosystem_architecture_label', 'general_ecosystem_architecture_text')
 			. '    </ul>'
 			. '  </div>'
 
 			. '  <div class="card">'
-			. '    <h3>Technische Bausteine für strukturierte Erweiterungen</h3>'
+			. '    <h3>' . $this->escape($this->txt('general_technical_title')) . '</h3>'
 			. '    <ul>'
-			. '      <li><strong>Dependency Injection + Auto-Wiring:</strong> Services werden konsistent aufgelöst, getestet und wiederverwendet.</li>'
-			. '      <li><strong>Worker / Jobs:</strong> Hintergrundprozesse für Queue-Verarbeitung, Sync, Cleanup und periodische Aufgaben.</li>'
-			. '      <li><strong>Microservice-Konnektoren:</strong> saubere Anbindung externer Systeme (optional) – über klare Schnittstellen und ohne ILIAS zu verbiegen.</li>'
-			. '      <li><strong>Hohe Austauschbarkeit:</strong> Komponenten können je nach Bedarf ersetzt, erweitert oder ergänzt werden.</li>'
+			. $this->renderListItem('general_technical_di_label', 'general_technical_di_text')
+			. $this->renderListItem('general_technical_workers_label', 'general_technical_workers_text')
+			. $this->renderListItem('general_technical_microservices_label', 'general_technical_microservices_text')
+			. $this->renderListItem('general_technical_replaceable_label', 'general_technical_replaceable_text')
 			. '    </ul>'
 			. '  </div>'
 
 			. '  <div class="card">'
-			. '    <h3>KI-Komponenten & Wissensarbeit</h3>'
-			. '    <p>'
-			. '      BASE3 ergänzt ILIAS um eine robuste Grundlage für KI-Use-Cases – mit klaren Pipelines und gut wartbaren Bausteinen.'
-			. '    </p>'
+			. '    <h3>' . $this->escape($this->txt('general_ai_title')) . '</h3>'
+			. '    <p>' . $this->escape($this->txt('general_ai_intro')) . '</p>'
 			. '    <ul>'
-			. '      <li><strong>Agent Flows:</strong> modulare Verarbeitungsschritte (Extractor → Parser → Chunker → Embedding → VectorStore).</li>'
-			. '      <li><strong>Chatbot / RAG:</strong> Retrieval über Vektor-Datenbank, Filter (z.B. Subtree/ACL) und nachvollziehbare Treffer.</li>'
-			. '      <li><strong>Admin-Dashboards:</strong> zeigen Fortschritt, Mengen, Fehler und letzte Aktionen.</li>'
+			. $this->renderListItem('general_ai_flows_label', 'general_ai_flows_text')
+			. $this->renderListItem('general_ai_chatbot_label', 'general_ai_chatbot_text')
+			. $this->renderListItem('general_ai_dashboards_label', 'general_ai_dashboards_text')
 			. '    </ul>'
 			. '  </div>'
 
 			. '  <div class="card">'
-			. '    <h3>Reporting & Daten-Tools</h3>'
+			. '    <h3>' . $this->escape($this->txt('general_reporting_title')) . '</h3>'
 			. '    <ul>'
-			. '      <li><strong>Reporting-Displays:</strong> konfigurierbare Tabellen/Ansichten mit konsistenter Datenquelle.</li>'
-			. '      <li><strong>Strukturierte Query-Layer:</strong> einheitliche Datenabfragen (inkl. Join-Auflösung) für wiederverwendbare Reports.</li>'
-			. '      <li><strong>Frontend-Assets:</strong> ClientStack bündelt JS/CSS sauber und kontrolliert (ohne Wildwuchs).</li>'
+			. $this->renderListItem('general_reporting_displays_label', 'general_reporting_displays_text')
+			. $this->renderListItem('general_reporting_queries_label', 'general_reporting_queries_text')
+			. $this->renderListItem('general_reporting_assets_label', 'general_reporting_assets_text')
 			. '    </ul>'
 			. '  </div>'
 			. '</div>'
@@ -167,9 +165,8 @@ class ilBase3IliasAdapterConfigGUI extends AbstractPageComponentConfigGUI {
 			. '  <img src="Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/Base3IliasAdapter/assets/logo.svg" '
 			. '       alt="BASE3" '
 			. '       style="height:1.5em;margin-right:6px;float:right;">'
-			. '  <strong>Credentials:</strong> Dieses Projekt ist Teil des '
-			. '  <strong>BASE3 EcoSystem</strong> (GPL v3.0), '
-			. '  entwickelt und gepflegt von <strong>Daniel Dahme</strong>. '
+			. '  <strong>' . $this->escape($this->txt('general_credentials_label')) . ':</strong> '
+			. $this->escape($this->txt('general_credentials_text'))
 			. '</div>'
 
 			. '<style>'
@@ -186,6 +183,14 @@ class ilBase3IliasAdapterConfigGUI extends AbstractPageComponentConfigGUI {
 			. '</style>';
 
 		$this->tpl->setContent($html);
+	}
+
+	protected function renderListItem(string $labelKey, string $textKey): string {
+		return '<li><strong>'
+			. $this->escape($this->txt($labelKey))
+			. ':</strong> '
+			. $this->escape($this->txt($textKey))
+			. '</li>';
 	}
 
 	/**

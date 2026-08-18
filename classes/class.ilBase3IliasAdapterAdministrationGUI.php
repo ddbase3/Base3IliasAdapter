@@ -36,10 +36,7 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 			[
 				'tabs' => $this->getAdministrationConfig(),
 				'active' => $this->ctrl->getCmd('view'),
-				'empty_message' => $this->txt(
-					'base3_admin_empty',
-					'No BASE3 administration displays are available.'
-				),
+				'empty_message' => $this->pluginTxt('base3_admin_empty'),
 			]
 		);
 
@@ -47,13 +44,8 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	}
 
 	protected function setTitleAndDescription(): void {
-		$this->tpl->setTitle($this->txt('base3_admin_page_title', 'BASE3 Administration'));
-		$this->tpl->setDescription(
-			$this->txt(
-				'base3_admin_page_description',
-				'Central administration page for BASE3 tools, applications and extras.'
-			)
-		);
+		$this->tpl->setTitle($this->pluginTxt('base3_admin_page_title'));
+		$this->tpl->setDescription($this->pluginTxt('base3_admin_page_description'));
 	}
 
 	protected function getAdministrationConfig(): array {
@@ -72,7 +64,7 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 				continue;
 			}
 
-			$tab['label'] = $this->txt(
+			$tab['label'] = $this->translateAdministrationLabel(
 				'base3_admin_tab_' . $tabName,
 				isset($tab['label']) && is_scalar($tab['label']) ? (string) $tab['label'] : $tabName
 			);
@@ -91,7 +83,7 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 					continue;
 				}
 
-				$display['label'] = $this->txt(
+				$display['label'] = $this->translateAdministrationLabel(
 					'base3_admin_subtab_' . $displayName,
 					isset($display['label']) && is_scalar($display['label'])
 						? (string) $display['label']
@@ -108,7 +100,18 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 		return $config;
 	}
 
-	protected function txt(string $key, string $fallback): string {
+	protected function pluginTxt(string $key, ?string $fallback = null): string {
+		$text = ilBase3IliasAdapterPlugin::getInstance()->txt($key);
+
+		if($fallback !== null && ($text === $key || trim($text) === '')) {
+			return $fallback;
+		}
+
+		return $text;
+	}
+
+
+	protected function translateAdministrationLabel(string $key, string $fallback): string {
 		return $this->getTranslation()->translate(
 			'Administration',
 			'administration',
@@ -143,9 +146,11 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 		return $DIC[IBase3IliasSettings::class];
 	}
 
+
 	protected function getTranslation(): ITranslation {
 		global $DIC;
 
 		return $DIC[ITranslation::class];
 	}
+
 }

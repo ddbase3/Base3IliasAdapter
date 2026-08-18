@@ -1,0 +1,48 @@
+base3_admin_menu_title#:#Инструменты
+base3_admin_no_access#:#Нет доступа к администрированию.
+base3_admin_empty#:#Нет доступных административных представлений BASE3.
+base3_admin_page_title#:#Администрирование BASE3
+base3_admin_page_description#:#Центральная страница администрирования инструментов, приложений и расширений BASE3.
+tab_general#:#Общие
+error_tab_not_found_title#:#Вкладка не найдена
+error_tab_not_found_message#:#Запрошенная административная вкладка недоступна.
+general_title#:#Адаптер Base3Ilias
+general_lead#:#Base3Ilias связывает ILIAS с BASE3 Framework и добавляет модульные и прозрачные технические компоненты без патчей ядра.
+general_ecosystem_title#:#BASE3 EcoSystem в ILIAS
+general_ecosystem_plugins_label#:#Плагины полностью работают в ILIAS
+general_ecosystem_plugins_text#:#Сервисы, маршрутизация и интерфейс выполняются непосредственно в контексте ILIAS.
+general_ecosystem_modular_label#:#Модульность и расширяемость
+general_ecosystem_modular_text#:#Плагины BASE3 аккуратно добавляют функции без изменений ядра.
+general_ecosystem_architecture_label#:#Слабосвязанная архитектура
+general_ecosystem_architecture_text#:#Чёткие интерфейсы, обнаружение ClassMap и стабильные заменяемые компоненты.
+general_technical_title#:#Технические компоненты для структурированных расширений
+general_technical_di_label#:#Dependency Injection и Auto-Wiring
+general_technical_di_text#:#Сервисы разрешаются единообразно и могут тестироваться и переиспользоваться.
+general_technical_workers_label#:#Workers и Jobs
+general_technical_workers_text#:#Фоновая обработка очередей, синхронизации, очистки и периодических задач.
+general_technical_microservices_label#:#Коннекторы микросервисов
+general_technical_microservices_text#:#Дополнительные внешние системы подключаются через чёткие интерфейсы без нарушения архитектуры ILIAS.
+general_technical_replaceable_label#:#Высокая заменяемость
+general_technical_replaceable_text#:#Компоненты можно заменять, расширять или дополнять по необходимости.
+general_ai_title#:#Компоненты ИИ и работа со знаниями
+general_ai_intro#:#BASE3 добавляет в ILIAS надёжную основу для сценариев ИИ с понятными pipeline и поддерживаемыми компонентами.
+general_ai_flows_label#:#Agent Flows
+general_ai_flows_text#:#Модульные этапы: extractor, parser, chunker, embedding и vector store.
+general_ai_chatbot_label#:#Chatbot и RAG
+general_ai_chatbot_text#:#Поиск по векторным базам с фильтрами, например subtree или ACL, и прослеживаемыми результатами.
+general_ai_dashboards_label#:#Административные панели
+general_ai_dashboards_text#:#Показывают прогресс, количества, ошибки и последние действия.
+general_reporting_title#:#Отчётность и инструменты данных
+general_reporting_displays_label#:#Представления отчётности
+general_reporting_displays_text#:#Настраиваемые таблицы и представления с единым источником данных.
+general_reporting_queries_label#:#Структурированные слои запросов
+general_reporting_queries_text#:#Единообразные запросы данных, включая разрешение join, для повторно используемых отчётов.
+general_reporting_assets_label#:#Frontend-ресурсы
+general_reporting_assets_text#:#ClientStack объединяет JavaScript и CSS контролируемым и поддерживаемым образом.
+general_credentials_label#:#Сведения об авторстве
+general_credentials_text#:#Этот проект является частью BASE3 EcoSystem (GPL v3.0), разработан и поддерживается Daniel Dahme.
+missing_dependency_abort#:#Остановка из-за отсутствующей зависимости: %s
+missing_dependency_info#:#Отсутствующая зависимость: %s
+dependencies_file_missing#:#Отсутствует файл: dependencies.php
+ajax_invalid_display_data#:#Недопустимые данные представления.
+ajax_display_not_found#:#Представление не найдено.

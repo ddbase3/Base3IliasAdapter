@@ -48,7 +48,7 @@ class ilBase3IliasAdapterAjaxGUI {
 
 		$data = $this->decodeDisplayData($encodedData);
 		if(!$data['valid']) {
-			$this->sendError(400, 'Invalid display data.');
+			$this->sendError(400, ilBase3IliasAdapterPlugin::getInstance()->txt('ajax_invalid_display_data'));
 		}
 
 		$name = trim((string) $request->request('name', ''));
@@ -57,7 +57,7 @@ class ilBase3IliasAdapterAjaxGUI {
 		$display = $classmap->getInstanceByInterfaceName(IDisplay::class, $name);
 
 		if(!$display instanceof IDisplay) {
-			$this->sendError(404, 'Display not found.');
+			$this->sendError(404, ilBase3IliasAdapterPlugin::getInstance()->txt('ajax_display_not_found'));
 		}
 
 		$display->setData($data['value']);
