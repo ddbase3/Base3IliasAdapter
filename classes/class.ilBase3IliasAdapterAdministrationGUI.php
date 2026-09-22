@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use Base3\Api\IAssetResolver;
 use Base3\Api\IClassMap;
 use Base3\Api\IDisplay;
 use Base3\Translation\Api\ITranslation;
@@ -25,9 +26,12 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 	}
 
 	public function executeCommand(): void {
-		$this->tpl->addJavaScript('components/Base3/ClientStack/assetloader/assetloader.min.js');
-		$this->tpl->addJavaScript('components/Base3/ClientStack/jqueryui/jquery-ui.js');
-		$this->tpl->addCss('components/Base3/ClientStack/jqueryui/jquery-ui.css');
+		global $DIC;
+
+		$assetResolver = $DIC[IAssetResolver::class];
+		$this->tpl->addJavaScript($assetResolver->resolve('plugin/ClientStack/assets/assetloader/assetloader.min.js'));
+		$this->tpl->addJavaScript($assetResolver->resolve('plugin/ClientStack/assets/jqueryui/jquery-ui.js'));
+		$this->tpl->addCss($assetResolver->resolve('plugin/ClientStack/assets/jqueryui/jquery-ui.css'));
 
 		$this->setTitleAndDescription();
 
