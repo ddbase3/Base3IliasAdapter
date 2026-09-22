@@ -56,9 +56,9 @@ class ilBase3IliasAdapterPlugin extends ilUserInterfaceHookPlugin
 
 		self::$instance = $this;
 
-		self::registerAutoloader();
 		$this->settings = new ilSetting(self::PLUGIN_SETTINGS);
 		$this->publishSelf();
+		self::bootIlias9Compatibility();
 
 		if ($DIC->isDependencyAvailable('globalScreen')) {
 			require_once(__DIR__ . '/class.ilBase3IliasAdapterMainBarProvider.php');
@@ -158,22 +158,13 @@ class ilBase3IliasAdapterPlugin extends ilUserInterfaceHookPlugin
 	}
 
 	/**
-	 * @return void
+	 * Boots the isolated ILIAS 9 compatibility path when the plugin is installed
+	 * outside the public directory. ILIAS 10+ keeps its existing component-based
+	 * integration unchanged.
 	 */
-	public static function registerAutoloader(): void {
-/*
-		global $DIC;
-
-		if (!isset($DIC['qualitus.autoload'])) {
-			require_once(realpath(dirname(__FILE__)) . '/Autoload/QualitusAutoloader.php');
-			$Autoloader = new QualitusAutoloader();
-			$Autoloader->register();
-			$Autoloader->addNamespace('ILIAS\Plugin', '/Customizing/global/plugins');
-			$DIC['qualitus.autoload'] = $Autoloader;
-		}
-
-		$DIC['qualitus.autoload']->addNamespace(self::PLUGIN_NS, realpath(dirname(__FILE__)));
-*/
+	private static function bootIlias9Compatibility(): void {
+		require_once __DIR__ . '/class.ilBase3IliasAdapterIlias9Compatibility.php';
+		ilBase3IliasAdapterIlias9Compatibility::bootIfRequired();
 	}
 
 	/**
