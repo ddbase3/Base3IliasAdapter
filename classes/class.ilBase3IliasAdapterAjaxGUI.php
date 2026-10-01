@@ -3,6 +3,8 @@
 use Base3\Api\IClassMap;
 use Base3\Api\IDisplay;
 use Base3\Api\IRequest;
+use Base3Ilias\Api\IBase3IliasSettings;
+use Base3Ilias\Base3\Base3IliasChatbotConfigService;
 use Base3Ilias\Base3\Base3IliasRuntime;
 use ILIAS\DI\Container;
 
@@ -13,6 +15,7 @@ class ilBase3IliasAdapterAjaxGUI {
 
 	private const DISPLAY_DATA_PARAMETER = 'base3_display_data';
 	private const MAX_DISPLAY_DATA_LENGTH = 1048576;
+	private const CHATBOT_CONFIG_DISPLAY = 'chatbotconfigdisplay';
 
 	protected Container $dic;
 	protected ilCtrl $ctrl;
@@ -27,7 +30,7 @@ class ilBase3IliasAdapterAjaxGUI {
 	public function executeCommand(): void {
 		$cmd = $this->ctrl->getCmd('dispatch');
 
-		if(!in_array($cmd, ['dispatch'], true)) {
+		if(!in_array($cmd, ['dispatch', 'fileManager'], true)) {
 			$cmd = 'dispatch';
 		}
 
@@ -60,9 +63,99 @@ class ilBase3IliasAdapterAjaxGUI {
 			$this->sendError(404, ilBase3IliasAdapterPlugin::getInstance()->txt('ajax_display_not_found'));
 		}
 
-		$display->setData($data['value']);
+		if($name === self::CHATBOT_CONFIG_DISPLAY) {
+			$this->configureChatbotDisplay($display);
+		} else {
+			$display->setData($data['value']);
+		}
+
 		echo $display->getOutput($out !== '' ? $out : 'html', true);
 		exit;
+	}
+
+	protected function fileManager(): void {
+		$data = $this->getConfiguredDisplayData(self::CHATBOT_CONFIG_DISPLAY);
+		$group = $this->requireDisplayString($data, 'group');
+		$name = $this->requireDisplayString($data, 'name');
+		$query = $this->dic->http()->request()->getQueryParams();
+		$action = trim((string)($query['fm_action'] ?? ''));
+
+		$this->getChatbotConfigService()->handleFileManager(
+			$action,
+			$group,
+			$name,
+			(int)$this->dic->user()->getId()
+		);
+	}
+
+	private function configureChatbotDisplay(IDisplay $display): void {
+		$data = $this->getConfiguredDisplayData(self::CHATBOT_CONFIG_DISPLAY);
+
+		$this->getChatbotConfigService()->configureDisplay(
+			$display,
+			$this->requireDisplayString($data, 'group'),
+			$this->requireDisplayString($data, 'name'),
+			$this->requireDisplayString($data, 'title'),
+			$this->requireDisplayString($data, 'description'),
+			$this->requireDisplayString($data, 'submit_label'),
+			$this->ctrl->getLinkTargetByClass(
+				['ilUIPluginRouterGUI', self::class],
+				'fileManager'
+			)
+		);
+	}
+
+	private function getChatbotConfigService(): Base3IliasChatbotConfigService {
+		return Base3IliasRuntime::getServiceLocator()->get(Base3IliasChatbotConfigService::class);
+	}
+
+	/**
+	 * @return array<string,mixed>
+	 */
+	private function getConfiguredDisplayData(string $displayName): array {
+		$settings = Base3IliasRuntime::getServiceLocator()->get(IBase3IliasSettings::class);
+		$match = null;
+
+		foreach($settings->getAdministrationConfig() as $tab) {
+			if(!is_array($tab)) {
+				continue;
+			}
+
+			foreach($tab['displays'] ?? [] as $display) {
+				if(!is_array($display) || trim((string)($display['name'] ?? '')) !== $displayName) {
+					continue;
+				}
+
+				if($match !== null) {
+					throw new RuntimeException('Administration display configuration is ambiguous: ' . $displayName);
+				}
+
+				if(!isset($display['data']) || !is_array($display['data'])) {
+					throw new RuntimeException('Administration display data is missing: ' . $displayName);
+				}
+
+				$match = $display['data'];
+			}
+		}
+
+		if($match === null) {
+			throw new RuntimeException('Administration display configuration not found: ' . $displayName);
+		}
+
+		return $match;
+	}
+
+	private function requireDisplayString(array $data, string $key): string {
+		if(!array_key_exists($key, $data) || !is_scalar($data[$key])) {
+			throw new RuntimeException('Administration display value is missing: ' . $key);
+		}
+
+		$value = trim((string)$data[$key]);
+		if($value === '') {
+			throw new RuntimeException('Administration display value is empty: ' . $key);
+		}
+
+		return $value;
 	}
 
 	/**
