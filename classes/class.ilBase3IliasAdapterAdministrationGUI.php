@@ -40,6 +40,7 @@ class ilBase3IliasAdapterAdministrationGUI extends ilObjectGUI {
 			[
 				'tabs' => $this->getAdministrationConfig(),
 				'active' => $this->ctrl->getCmd('view'),
+				'initial_load_via_ajax' => true,
 				'empty_message' => $this->pluginTxt('base3_admin_empty'),
 			]
 		);
