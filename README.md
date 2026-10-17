@@ -53,10 +53,14 @@ This plugin is the central Base3IliasAdapter UIHook plugin. Other BASE3-based IL
 
 GPL v3.0
 
-## Administration display initialization
+## Generic AJAX dispatch
 
-The BASE3 administration initializes the initially selected tab through the existing AJAX display endpoint by setting `initial_load_via_ajax` on `TabControlDisplay`. Subsequent tab changes use the same endpoint. This avoids bypassing the host-specific display initialization when the Chatbot configuration is the first visible tab, including for ILIAS users without the `Developer` role.
+`ilBase3IliasAdapterAjaxGUI` provides one framework entry command, `dispatch`. It resolves ordinary BASE3 outputs through `Base3IliasRuntime::dispatch()` and configured displays through `IClassMap` / `IDisplay`. All displays receive their submitted `base3_display_data` through the same `setData()` call; the adapter does not recognize Chatbot, FileManager, or other feature identifiers.
 
-The Chatbot FileManager remains a required part of `ChatbotConfigDisplay`. Its upload endpoints are provided by `Base3IliasChatbotConfigService::configureDisplay()` in `ilBase3IliasAdapterAjaxGUI`; the tab control does not create or modify FileManager configuration. The existing `fileManager` command continues to handle operations through the ILIAS managed file storage service.
+`TabControlDisplay` can render the initial administration tab synchronously and loads subsequent tabs through the same generic endpoint. Each project plugin supplies the data needed by its own displays. A display that needs managed-file endpoints must receive those endpoints from its project composition, not from the AJAX adapter.
 
-Deployment verification should open the BASE3 administration both with and without the `Developer` role, then open Chatbot Configuration, list/upload/download/delete a test file in each authorized account, and check keyboard navigation and loading/error status behavior. No new upload service is involved.
+FileManager operations for the Base3Ilias administration are exposed by the classmap-discovered `base3iliasfilemanageroutput` in the Base3Ilias component. That endpoint delegates to the already existing FileManager service. Existing UIHook, RepositoryObject and PageComponent command handlers are unaffected by this adapter change.
+
+For deployments with more than one project plugin, see the project settings migration notes supplied with the patch. The AJAX adapter itself needs no per-project configuration.
+
+Deployment verification: open the administration with and without the `Developer` role; verify its initial tab, tab switching, Chatbot Configuration and an administrator's list/upload/download/delete operations. Also verify keyboard navigation, loading/error status and focus behavior.
