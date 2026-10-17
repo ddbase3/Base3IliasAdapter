@@ -5,8 +5,9 @@
  *
  * ILIAS 10+ loads BASE3 from the native components/Base3 layout. ILIAS 9 has
  * no component directory, so the adapter keeps the same BASE3 packages under
- * its local lib directory and prepares the directory constants and autoloaders
- * before Base3IliasRuntime is started.
+ * its local lib directory. The compatibility bootstrap prepares the adapter
+ * constants and autoloaders when the adapter initializes first; the runtime
+ * itself discovers modules when another UIHook starts it earlier.
  *
  * This class is intentionally isolated so ILIAS 9 support can be removed
  * without changing the normal ILIAS 10+ integration path.

@@ -72,7 +72,7 @@ DIR_TEST       = <Base3IliasAdapter>/lib/Base3Framework/test/
 DIR_PLUGIN     = <Base3IliasAdapter>/lib/
 ```
 
-`DIR_COMPONENTS` intentionally keeps its normal ILIAS meaning even though the directory does not exist in ILIAS 9. `Base3IliasClassMap` now skips the optional host-component scan when that directory is absent. BASE3 plugin discovery itself continues through `DIR_PLUGIN`.
+`DIR_COMPONENTS` keeps its normal ILIAS meaning even though the directory does not exist in ILIAS 9. `Base3IliasRuntime` resolves its module discovery root from the actual location of `Base3Ilias`: inside `components/`, the registry scans all of `components/`; outside it, the registry scans the containing module directory such as `Base3IliasAdapter/lib/`. This also works when a UIHook calls `Base3IliasRuntime::bootOnce()` before the adapter plugin `init()` method. After module discovery, `DIR_BASE3` and `DIR_PLUGIN` resolve to the actual `Base3Ilias` module parent instead of a fixed component path. The existing `DIR_BASE3_MODULE_ROOTS` setting remains available for explicitly configured additional module roots but is not needed for ILIAS 9. `Base3IliasClassMap` uses the registry to discover plugin classes.
 
 ## Autoloading
 
@@ -93,7 +93,7 @@ Base3\       -> DIR_SRC
 
 This makes the framework, Base3Ilias runtime classes, Base3Ilias component helper classes, and all additional BASE3 plugins below `lib` available through the existing loader.
 
-After that the adapter starts `Base3IliasRuntime::bootOnce()`. The runtime creates the BASE3 service locator and publishes its services, including `Base3\Api\IClassMap`, into the ILIAS DIC. This is the part that is missing when the ILIAS 9 configuration UI is opened without the compatibility bootstrap.
+When the adapter plugin initializes, the compatibility bootstrap registers the legacy autoloader and starts `Base3IliasRuntime::bootOnce()`. Other ILIAS plugins may start the runtime earlier, for example while ILIAS creates a UIHook. The runtime now discovers its module root independently of adapter initialization, so both entry paths resolve the same BASE3 modules. The compatibility class remains responsible only for the legacy adapter bootstrap setup.
 
 ## Base3Ilias paths
 
