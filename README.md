@@ -64,3 +64,11 @@ FileManager operations for the Base3Ilias administration are exposed by the clas
 For deployments with more than one project plugin, see the project settings migration notes supplied with the patch. The AJAX adapter itself needs no per-project configuration.
 
 Deployment verification: open the administration with and without the `Developer` role; verify its initial tab, tab switching, Chatbot Configuration and an administrator's list/upload/download/delete operations. Also verify keyboard navigation, loading/error status and focus behavior.
+
+## Shared ILIAS Tools settings
+
+The existing Tools menu item and `ilBase3IliasAdapterAdministrationGUI` now render the classmap-discovered `ClientStack\Display\SettingsDisplay`. The host checks native administrator authorization before rendering. The AJAX dispatcher and existing link target remain unchanged. Rebuild BASE3 module/classmap artifacts when adding IliasDemoData's manifest and new settings tabs.
+
+## Shared ILIAS Tools settings
+
+The existing Tools menu item and `ilBase3IliasAdapterAdministrationGUI` now render the classmap-discovered `ClientStack\Display\SettingsDisplay`. The host checks native administrator authorization before rendering. The AJAX dispatcher and existing link target remain unchanged. Rebuild BASE3 module/classmap artifacts when adding IliasDemoData's manifest and new settings tabs.

@@ -39,3 +39,5 @@ The host should verify the tab control, AJAX loading indicators, error messages,
 ## Known verification gaps
 
 The provided adapter sources do not establish the full ILIAS router access policy, host log retention, storage retention, external recipients, international transfers, or end-to-end browser accessibility. These items need a deployment review using the actual ILIAS version and enabled plugins.
+
+The existing ILIAS Tools settings entry now renders the shared BASE3 feature-filtered administration and checks native ILIAS administrator authorization at its server entry. No new persistence is introduced by the UIHook change.
