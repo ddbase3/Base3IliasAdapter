@@ -72,3 +72,7 @@ The existing Tools menu item and `ilBase3IliasAdapterAdministrationGUI` now rend
 ## Shared ILIAS Tools settings
 
 The existing Tools menu item and `ilBase3IliasAdapterAdministrationGUI` now render the classmap-discovered `ClientStack\Display\SettingsDisplay`. The host checks native administrator authorization before rendering. The AJAX dispatcher and existing link target remain unchanged. Rebuild BASE3 module/classmap artifacts when adding IliasDemoData's manifest and new settings tabs.
+
+## BASE3 mode notices
+
+The adapter now registers a single native GlobalScreen layout modification provider. It only aggregates BASE3 `IModeInfoProvider` entries; it does not persist, authorize, or manipulate the identity-changing operation.
