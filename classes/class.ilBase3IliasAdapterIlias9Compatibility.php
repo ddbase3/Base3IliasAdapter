@@ -29,7 +29,7 @@ final class ilBase3IliasAdapterIlias9Compatibility {
 		}
 
 		self::defineDirectories($pluginRoot, $iliasRoot);
-		self::registerAutoloaders();
+		self::registerAutoloaders($pluginRoot);
 
 		\Base3\Base3Ilias\Base3\Base3IliasRuntime::bootOnce(false, true);
 	}
@@ -89,8 +89,8 @@ final class ilBase3IliasAdapterIlias9Compatibility {
 		if (!defined('DIR_PLUGIN')) define('DIR_PLUGIN', DIR_BASE3);
 	}
 
-	private static function registerAutoloaders(): void {
-		$autoloaderFile = DIR_BASE3 . 'bootstrap' . DIRECTORY_SEPARATOR . 'Autoloader.php';
+	private static function registerAutoloaders(string $pluginRoot): void {
+		$autoloaderFile = $pluginRoot . DIRECTORY_SEPARATOR . 'bootstrap' . DIRECTORY_SEPARATOR . 'Autoloader.php';
 		if (!is_file($autoloaderFile)) {
 			throw new RuntimeException('BASE3 autoloader not found: ' . $autoloaderFile);
 		}

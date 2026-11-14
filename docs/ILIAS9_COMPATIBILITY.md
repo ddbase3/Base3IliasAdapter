@@ -14,13 +14,13 @@ ILIAS 9 has no equivalent BASE3 component location in this integration. For the 
 
 ```text
 <ILIAS>/Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/Base3IliasAdapter/
+├── bootstrap/
+│   └── Autoloader.php
 └── lib/
-    ├── bootstrap/
-    │   └── Autoloader.php
     ├── Core/
     ├── CoreFoundation/
     ├── Base3Ilias/
-    └── <other BASE3 plugins>/
+    └── <other BASE3 and Qualitus plugins>/
 ```
 
 This compatibility path is intentionally isolated in `class.ilBase3IliasAdapterIlias9Compatibility.php` so it can be removed when ILIAS 9 support ends.
@@ -34,8 +34,6 @@ The ILIAS 9 `lib` directory is the BASE3 plugin root for that installation. It m
 
 ```text
 lib/
-├── bootstrap/
-│   └── Autoloader.php
 ├── Core/
 ├── CoreFoundation/
 ├── Base3Ilias/
@@ -82,7 +80,7 @@ DIR_PLUGIN     = <Base3IliasAdapter>/lib/
 
 ## Autoloading
 
-The existing BASE3 bootstrap autoloader from `lib/bootstrap/Autoloader.php` is used without modifications to the shared standalone modules.
+The adapter bundles the existing BASE3 bootstrap autoloader in `Base3IliasAdapter/bootstrap/Autoloader.php` for ILIAS 9 only. Its plugin-local manifest scan accepts the `Base3` and `Qualitus` vendor namespaces. The standalone autoloader in the BASE3 installation is not changed.
 
 After `Autoloader::register()` adds the manifest-based module source namespaces, the compatibility bootstrap registers the ILIAS component class namespaces:
 
@@ -98,6 +96,7 @@ Base3\Core\           -> DIR_PLUGIN/Core/src
 Base3\CoreFoundation\ -> DIR_PLUGIN/CoreFoundation/src
 Base3\Base3Ilias\     -> DIR_PLUGIN/Base3Ilias/src
 Base3\<Plugin>\       -> DIR_PLUGIN/<Plugin>/src
+Qualitus\<Plugin>\    -> DIR_PLUGIN/<Plugin>/src
 ```
 
 This makes the framework, Base3Ilias runtime classes, the PageComponent and UserInterfaceHook component classes, and additional BASE3 modules below `lib` available through the existing loader.
