@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-use Base3\Api\IClassMap;
-use Base3Ilias\Api\IMetaBarItemProvider;
-use Base3Ilias\Base3\Base3IliasRuntime;
+use Base3\CoreFoundation\Api\IClassMap;
+use Base3\Base3Ilias\Api\IMetaBarItemProvider;
+use Base3\Base3Ilias\Base3\Base3IliasRuntime;
 use ILIAS\GlobalScreen\Scope\MetaBar\Provider\AbstractStaticMetaBarPluginProvider;
 
 class ilBase3IliasAdapterMetaBarProvider extends AbstractStaticMetaBarPluginProvider

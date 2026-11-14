@@ -31,7 +31,7 @@ final class ilBase3IliasAdapterIlias9Compatibility {
 		self::defineDirectories($pluginRoot, $iliasRoot);
 		self::registerAutoloaders();
 
-		\Base3Ilias\Base3\Base3IliasRuntime::bootOnce(false, true);
+		\Base3\Base3Ilias\Base3\Base3IliasRuntime::bootOnce(false, true);
 	}
 
 	private static function findIliasRoot(string $start): ?string {
@@ -68,11 +68,12 @@ final class ilBase3IliasAdapterIlias9Compatibility {
 
 	private static function defineDirectories(string $pluginRoot, string $iliasRoot): void {
 		$base3Root = $pluginRoot . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR;
-		$frameworkRoot = $base3Root . 'Base3Framework' . DIRECTORY_SEPARATOR;
+		$frameworkRoot = $base3Root . 'Core' . DIRECTORY_SEPARATOR;
+		$contractsRoot = $base3Root . 'CoreFoundation' . DIRECTORY_SEPARATOR;
 		$base3IliasRoot = $base3Root . 'Base3Ilias' . DIRECTORY_SEPARATOR;
 
-		if (!is_dir($frameworkRoot . 'src')) {
-			throw new RuntimeException('BASE3 Framework not found in Base3IliasAdapter/lib/Base3Framework.');
+		if (!is_dir($frameworkRoot . 'src') || !is_dir($contractsRoot . 'src')) {
+			throw new RuntimeException('BASE3 Core and CoreFoundation are required in Base3IliasAdapter/lib.');
 		}
 
 		if (!is_dir($base3IliasRoot . 'src')) {
@@ -89,18 +90,23 @@ final class ilBase3IliasAdapterIlias9Compatibility {
 	}
 
 	private static function registerAutoloaders(): void {
-		$autoloaderFile = DIR_SRC . 'Core' . DIRECTORY_SEPARATOR . 'Autoloader.php';
+		$autoloaderFile = DIR_BASE3 . 'bootstrap' . DIRECTORY_SEPARATOR . 'Autoloader.php';
 		if (!is_file($autoloaderFile)) {
 			throw new RuntimeException('BASE3 autoloader not found: ' . $autoloaderFile);
 		}
 
 		require_once $autoloaderFile;
 
-		\Base3\Core\Autoloader::registerPlugin(
-			'Base3\\Base3Ilias\\',
-			DIR_BASE3 . 'Base3Ilias' . DIRECTORY_SEPARATOR . 'classes' . DIRECTORY_SEPARATOR
-		);
-		\Base3\Core\Autoloader::register();
+		\Base3\Bootstrap\Autoloader::register();
+
+		// Component classes live beside the module src/ tree in ILIAS 9.
+		// Register only the component sub-namespaces, preserving the src/ owner.
+		foreach (['PageComponent', 'UserInterfaceHook'] as $component) {
+			\Base3\Bootstrap\Autoloader::registerPlugin(
+				'Base3\\Base3Ilias\\' . $component . '\\',
+				DIR_BASE3 . 'Base3Ilias' . DIRECTORY_SEPARATOR . 'classes' . DIRECTORY_SEPARATOR . $component . DIRECTORY_SEPARATOR
+			);
+		}
 	}
 
 	private static function relativePath(string $basePath, string $path): ?string {

@@ -15,7 +15,10 @@ ILIAS 9 has no equivalent BASE3 component location in this integration. For the 
 ```text
 <ILIAS>/Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/Base3IliasAdapter/
 └── lib/
-    ├── Base3Framework/
+    ├── bootstrap/
+    │   └── Autoloader.php
+    ├── Core/
+    ├── CoreFoundation/
     ├── Base3Ilias/
     └── <other BASE3 plugins>/
 ```
@@ -27,11 +30,14 @@ This compatibility path is intentionally isolated in `class.ilBase3IliasAdapterI
 
 The ILIAS 9 `lib` directory is the BASE3 plugin root for that installation. It must contain every BASE3 package required by the final runtime composition.
 
-`Base3Framework` and `Base3Ilias` are mandatory. The current Base3Ilias source also depends on `UiFoundation`, so a complete ILIAS 9 runtime needs at least:
+`Core`, `CoreFoundation` and `Base3Ilias` are mandatory. The current Base3Ilias source also depends on `UiFoundation`, so a complete ILIAS 9 runtime needs at least:
 
 ```text
 lib/
-├── Base3Framework/
+├── bootstrap/
+│   └── Autoloader.php
+├── Core/
+├── CoreFoundation/
 ├── Base3Ilias/
 └── UiFoundation/
 ```
@@ -66,9 +72,9 @@ Before the BASE3 autoloader is registered, the adapter defines the BASE3 directo
 DIR_ILIAS      = <ILIAS>/
 DIR_COMPONENTS = <ILIAS>/components/
 DIR_BASE3      = <Base3IliasAdapter>/lib/
-DIR_FRAMEWORK  = <Base3IliasAdapter>/lib/Base3Framework/
-DIR_SRC        = <Base3IliasAdapter>/lib/Base3Framework/src/
-DIR_TEST       = <Base3IliasAdapter>/lib/Base3Framework/test/
+DIR_FRAMEWORK  = <Base3IliasAdapter>/lib/Core/
+DIR_SRC        = <Base3IliasAdapter>/lib/Core/src/
+DIR_TEST       = <Base3IliasAdapter>/lib/Core/test/
 DIR_PLUGIN     = <Base3IliasAdapter>/lib/
 ```
 
@@ -76,22 +82,25 @@ DIR_PLUGIN     = <Base3IliasAdapter>/lib/
 
 ## Autoloading
 
-The existing BASE3 autoloader is used without changes to Base3Framework.
+The existing BASE3 bootstrap autoloader from `lib/bootstrap/Autoloader.php` is used without modifications to the shared standalone modules.
 
-Before `Autoloader::register()` is called, the compatibility bootstrap registers the existing Base3Ilias component-class namespace:
+After `Autoloader::register()` adds the manifest-based module source namespaces, the compatibility bootstrap registers the ILIAS component class namespaces:
 
 ```text
-Base3\Base3Ilias\ -> <Base3IliasAdapter>/lib/Base3Ilias/classes/
+Base3\Base3Ilias\UserInterfaceHook\ -> <Base3IliasAdapter>/lib/Base3Ilias/classes/UserInterfaceHook/
+Base3\Base3Ilias\PageComponent\ -> <Base3IliasAdapter>/lib/Base3Ilias/classes/PageComponent/
 ```
 
 The normal BASE3 registration then adds:
 
 ```text
-Base3\       -> DIR_SRC
-<Plugin>\    -> DIR_PLUGIN/<Plugin>/src
+Base3\Core\           -> DIR_PLUGIN/Core/src
+Base3\CoreFoundation\ -> DIR_PLUGIN/CoreFoundation/src
+Base3\Base3Ilias\     -> DIR_PLUGIN/Base3Ilias/src
+Base3\<Plugin>\       -> DIR_PLUGIN/<Plugin>/src
 ```
 
-This makes the framework, Base3Ilias runtime classes, Base3Ilias component helper classes, and all additional BASE3 plugins below `lib` available through the existing loader.
+This makes the framework, Base3Ilias runtime classes, the PageComponent and UserInterfaceHook component classes, and additional BASE3 modules below `lib` available through the existing loader.
 
 When the adapter plugin initializes, the compatibility bootstrap registers the legacy autoloader and starts `Base3IliasRuntime::bootOnce()`. Other ILIAS plugins may start the runtime earlier, for example while ILIAS creates a UIHook. The runtime now discovers its module root independently of adapter initialization, so both entry paths resolve the same BASE3 modules. The compatibility class remains responsible only for the legacy adapter bootstrap setup.
 
@@ -131,7 +140,7 @@ The remaining direct BASE3 asset references in the adapter administration GUI an
 host system name       ILIAS
 host system version    ILIAS_VERSION_NUMERIC
 embedded system name   BASE3
-embedded system version Base3Framework/VERSION
+embedded system version Core/VERSION
 ```
 
 The version reads are defensive and return an empty string if the respective version source is unavailable.

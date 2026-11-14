@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 use Base3\Base3Ilias\PageComponent\AbstractPageComponentConfigGUI;
-use UiFoundation\Api\IAdminDisplay;
+use Base3\UiFoundation\Api\IAdminDisplay;
 
 /**
  * Base3Ilias Adapter - ILIAS component settings configuration GUI.

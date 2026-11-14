@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-use Base3\Api\IClassMap;
-use Base3Ilias\Api\IModeInfoProvider;
-use Base3Ilias\Base3\Base3IliasRuntime;
+use Base3\CoreFoundation\Api\IClassMap;
+use Base3\Base3Ilias\Api\IModeInfoProvider;
+use Base3\Base3Ilias\Base3\Base3IliasRuntime;
 use ILIAS\GlobalScreen\Scope\Layout\Builder\StandardPageBuilder;
 use ILIAS\GlobalScreen\Scope\Layout\Factory\PageBuilderModification;
 use ILIAS\GlobalScreen\Scope\Layout\Provider\AbstractModificationPluginProvider;

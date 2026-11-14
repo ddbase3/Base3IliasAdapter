@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-use Base3\Api\IAssetResolver;
-use Base3\Api\IClassMap;
-use Base3\Api\IDisplay;
-use Base3\Authorization\Api\IAuthorizationService;
-use Base3\Authorization\Dto\AuthorizationRequest;
-use Base3\Usermanager\Permission;
+use Base3\CoreFoundation\Api\IAssetResolver;
+use Base3\CoreFoundation\Api\IClassMap;
+use Base3\CoreFoundation\Api\IDisplay;
+use Base3\CoreFoundation\Authorization\Api\IAuthorizationService;
+use Base3\CoreFoundation\Authorization\Dto\AuthorizationRequest;
+use Base3\CoreFoundation\Usermanager\Permission;
 
 /**
  * Shared BASE3 settings under the existing native ILIAS administration Tools entry.

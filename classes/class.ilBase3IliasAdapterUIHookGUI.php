@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-use Base3Ilias\Base3\Base3IliasRuntime;
+use Base3\Base3Ilias\Base3\Base3IliasRuntime;
 
 class ilBase3IliasAdapterUIHookGUI extends ilUIHookPluginGUI {
 

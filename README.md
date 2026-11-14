@@ -67,11 +67,11 @@ Deployment verification: open the administration with and without the `Developer
 
 ## Shared ILIAS Tools settings
 
-The existing Tools menu item and `ilBase3IliasAdapterAdministrationGUI` now render the classmap-discovered `ClientStack\Display\SettingsDisplay`. The host checks native administrator authorization before rendering. The AJAX dispatcher and existing link target remain unchanged. Rebuild BASE3 module/classmap artifacts when adding IliasDemoData's manifest and new settings tabs.
+The existing Tools menu item and `ilBase3IliasAdapterAdministrationGUI` now render the classmap-discovered `Base3\ClientStack\Display\SettingsDisplay`. The host checks native administrator authorization before rendering. The AJAX dispatcher and existing link target remain unchanged. Rebuild BASE3 module/classmap artifacts when adding IliasDemoData's manifest and new settings tabs.
 
 ## Shared ILIAS Tools settings
 
-The existing Tools menu item and `ilBase3IliasAdapterAdministrationGUI` now render the classmap-discovered `ClientStack\Display\SettingsDisplay`. The host checks native administrator authorization before rendering. The AJAX dispatcher and existing link target remain unchanged. Rebuild BASE3 module/classmap artifacts when adding IliasDemoData's manifest and new settings tabs.
+The existing Tools menu item and `ilBase3IliasAdapterAdministrationGUI` now render the classmap-discovered `Base3\ClientStack\Display\SettingsDisplay`. The host checks native administrator authorization before rendering. The AJAX dispatcher and existing link target remain unchanged. Rebuild BASE3 module/classmap artifacts when adding IliasDemoData's manifest and new settings tabs.
 
 ## BASE3 mode notices
 
